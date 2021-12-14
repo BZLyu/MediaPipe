@@ -41,7 +41,7 @@ if __name__ == '__main__':
             # Make detection
             results = pose.process(image)
 
-# TODO:add Kalman-Filter
+# TODO: add Kalman-Filter
 
             # Recolor image to BGR
             image.flags.writeable = True

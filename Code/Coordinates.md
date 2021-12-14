@@ -65,7 +65,7 @@ The code snippet below demonstrates how to use the X and Y coordinates to calcul
 
 这个姿势可以描述为以下身体部位角度的大致组合。
 
-两肩呈90度角
+‚两肩呈90度角
 两肘呈180度角
 前腿和腰部90度角
 后腿膝盖处180度角
