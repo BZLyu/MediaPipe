@@ -84,6 +84,11 @@
       <pane id="Scope" />
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -161,7 +166,7 @@
       <workItem from="1639673827871" duration="153000" />
       <workItem from="1639674132598" duration="575000" />
       <workItem from="1639859665525" duration="4328000" />
-      <workItem from="1639910520139" duration="3020000" />
+      <workItem from="1639910520139" duration="3822000" />
     </task>
     <servers />
   </component>
