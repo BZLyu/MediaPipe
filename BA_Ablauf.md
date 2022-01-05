@@ -1,4 +1,4 @@
-# 进度
+# Ablauf
 
 # 第一周 11.8-11.12
 
@@ -127,15 +127,11 @@
 
     1. 我们提出了一种新的目标表示和定位方法，这是对非刚性物体进行视觉跟踪的核心部分。基于特征直方图的目标表征通过各向同性核的空间掩蔽进行规范化。
 
-13.  Machine Learning-Based Multitarget Tracking of Motion in Sports Video -2021
+13. Machine Learning-Based Multitarget Tracking of Motion in Sports Video -2021
 
     1. 本文通过机器学习算法跟踪体育视频中多个目标的运动，并深入研究其跟踪技术。在移动目标检测方面，对传统的检测算法进行了理论上的分析以及算法上的实现，在此基础上提出了四种帧间diﬀerence方法和背景平均法的融合算法，以解决帧间diﬀerence方法和背景diﬀerence方法的不足之处。-融合算法利用学习率实时更新背景，并结合形态学处理来修正前景，可以有效地应对背景的缓慢变化。根据智能视频监控系统对实时性、准确性和占用较少视频存储空间的要求，本文对该算法的精简版进行了改进。-实验结果表明，改进后的多目标跟踪算法有效地改善了基于卡尔曼滤波的算法，满足了智能视频监控场景下的实时性和准确性要求。
 
-14.  
-
-15.  
-
-
+    
 
 ## 遇到的问题
 
@@ -291,12 +287,110 @@
 ## 实现
 
 1. Kalman 鼠标跟踪
-2. 
+
+   1. ```python
+      class pwm:
+          def __init__(self):
+              self.desired_position = 0.0
+              self.actual_position = 0
+      
+          def nextPWM(self, speed):
+              self.desired_position += speed
+              movement = round(self.desired_position - self.actual_position)
+              self.actual_position += movement
+              return movement
+      ```
+
+      ```
+      function makeVelocityCalculator(e_init, callback) {
+          var x = e_init.clientX,
+              y = e_init.clientY,
+              t = Date.now();
+          return function(e) {
+              var new_x = e.clientX,
+                  new_y = e.clientY,
+                  new_t = Date.now();
+              var x_dist = new_x - x,
+                  y_dist = new_y - y,
+                  interval = new_t - t;
+              var velocity = Math.sqrt(x_dist*x_dist+y_dist*y_dist)/interval;
+              callback(velocity);
+              // update values:
+              x = new_x;
+              y = new_y;
+              t = new_t;
+          };
+      }
+      ```
+
+      鼠标速度
+      
+      可以直接移动距离微分！！以上程序都可以不用!❌
+      
+      
+
+2. https://www.codenong.com/cs105985289/
+
+- Übertragungsmatrix: https://de.wikipedia.org/wiki/Übergangsmatrix
 
 ## 想法
 
 1. 或许可以不用球坐标，可以用 polar coordinate。极坐标就行
+
+# 第九周 27.12-31.12 Urlaub
+
+# 第十周 3.01-07.01
+
+## 看过的网页：
+
+1. https://www.kalmanfilter.net/CN/background_cn.html
+2. https://docs.opencv.org/3.4/dd/d6a/classcv_1_1KalmanFilter.html
+2. ** https://www.icode9.com/content-4-918215.html
 2. 
+
+## 捋一遍逻辑，建模型，写代码
+
+1. 角度的求法
+   1. 通过 3D 的 x,y,z->球坐标-> 角度
+   2. 通过 2D 的 xy->polar coordinate 极坐标->角度
+2. 确定好要用哪个 Kalman 的模型，需要哪些变量的带入？–自适应型，自己写 Kalman函数，无法带入，自适应型的 kalman 的参数需要自己定义(AKF)
+3. 通过角度求导直接得出 Ableitung der Zustandsvektor 和 Zustandsvektor der länge
+4. 什么是 $\Delta t$? -求Übertragungsmatrix **F**
+5. Beobachtungsmatrix **H**=(1 0 0 0）
+6. prozessrauschen Q=
+7. 以上变量带入 Kalman 得到新的角度
+8. 再从角度-> 新坐标-> 替换原来的坐标
+
+## 代码：
+
+1. Initiallized
+   1. x~k~=[ $ \varphi$  $$ \dot{\varphi}$$   $\ddot{\varphi} $  $\dddot{\varphi}$ ]
+
+2. Prediction
+   1. Set ==$\Delta t $==
+   2. P
+   3.    ==B 控制矩阵 不为0 ，因为有加速度，且它变化==?? 但是老师给的 B 为 0，控制矩阵和噪声。我不会判断，问老师
+
+## 想和老师沟通：
+
+1. SSD 用来训练识别 手部，脸部的，已经用 google 的资料训练好了。直接调用。Results.pose_landmarks 这个通过 SSD 得到坐标是作为观察值 (Measurement) https://1.bp.blogspot.com/-J66lTDBjlgw/XzVwzgeQJ7I/AAAAAAAAGYM/WBIhbOqzi4ICUswEOHv8r7ItJIOJgL9iwCLcBGAsYHQ/s411/image11.jpg 这个图就说明了，每一个 Frame 会有一次 SSD。
+2. 球坐标？-极坐标- 可以有 3D 的，怎么更新？(3D 转 2D 的转换函数不会找，因为需要学习 Tensorflow）Pose_detectoin->pose_landmark （module 里面）
+3. $\Delta t$ 怎么设定？wiki 里例子的时间是通过随机间隔来模拟的
+   1. 设定初始值时，截取系统时间，每次调用再截取一次系统时间，减去上次的系统时间
+4. 初始值：
+   1. x~k~=[ $ \varphi$  $$ \dot{\varphi}$$   $\ddot{\varphi} $  $\dddot{\varphi}$ $]^T$ ——(n*1)
+   2. Durch  [Matrixexponential](https://de.wikipedia.org/wiki/Matrixexponential)   得到：Übergangsmatrix $F=\left[\begin{array}{ccc}1 & \Delta t &\frac{1}{2} \Delta t^{2} &\frac{1}{6}\Delta t^{3} \\ 0 & 1 &\Delta t &\frac{1}{2} \Delta t^{2}\\ 0 & 0 &1 & \Delta t\\ 0 &0&0&1 \end{array}\right]$—–(n*n)
+   3. Messwert nur Winkel—$\varphi$  ,so Beobachtunhsmatix ist $H=\left[\begin{array}{llll}1 & 0 & 0 & 0\end{array}\right]$  —1*m
+   4. Processrauschen vs. Dynamik der deterministischen Störung und Projektion auf den Systemzustand? G=? 
+5. 怎么去验证？-通过鼠标运动，验证？
+
+
+
+## 开始动笔写一部分论文
+
+1. 论文 模板？ 排版，字体字号，latex 模板
+
+
 
 
 
