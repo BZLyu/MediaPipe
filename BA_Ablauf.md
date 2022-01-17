@@ -374,23 +374,151 @@
 ## 想和老师沟通：
 
 1. SSD 用来训练识别 手部，脸部的，已经用 google 的资料训练好了。直接调用。Results.pose_landmarks 这个通过 SSD 得到坐标是作为观察值 (Measurement) https://1.bp.blogspot.com/-J66lTDBjlgw/XzVwzgeQJ7I/AAAAAAAAGYM/WBIhbOqzi4ICUswEOHv8r7ItJIOJgL9iwCLcBGAsYHQ/s411/image11.jpg 这个图就说明了，每一个 Frame 会有一次 SSD。
+
 2. 球坐标？-极坐标- 可以有 3D 的，怎么更新？(3D 转 2D 的转换函数不会找，因为需要学习 Tensorflow）Pose_detectoin->pose_landmark （module 里面）
+
 3. $\Delta t$ 怎么设定？wiki 里例子的时间是通过随机间隔来模拟的
    1. 设定初始值时，截取系统时间，每次调用再截取一次系统时间，减去上次的系统时间
+   
 4. 初始值：
    1. x~k~=[ $ \varphi$  $$ \dot{\varphi}$$   $\ddot{\varphi} $  $\dddot{\varphi}$ $]^T$ ——(n*1)
    2. Durch  [Matrixexponential](https://de.wikipedia.org/wiki/Matrixexponential)   得到：Übergangsmatrix $F=\left[\begin{array}{ccc}1 & \Delta t &\frac{1}{2} \Delta t^{2} &\frac{1}{6}\Delta t^{3} \\ 0 & 1 &\Delta t &\frac{1}{2} \Delta t^{2}\\ 0 & 0 &1 & \Delta t\\ 0 &0&0&1 \end{array}\right]$—–(n*n)
    3. Messwert nur Winkel—$\varphi$  ,so Beobachtunhsmatix ist $H=\left[\begin{array}{llll}1 & 0 & 0 & 0\end{array}\right]$  —1*m
    4. Processrauschen vs. Dynamik der deterministischen Störung und Projektion auf den Systemzustand? G=? 
+   
 5. 怎么去验证？-通过鼠标运动，验证？
 
+   ------
 
+   
+
+6. 关于 B 和 r 的讨论，r=B*a, 有 r 意味着，B 和 a 都不是 0，设置 B
+
+6. 
+
+## 解答
+
+1. 不需要重新带入 SSD ，直接对比 Kalman 的数据
+2. 用 2D
+3. 使用包过后，不需要设定时间；但是如果要设定，我可定任意设定一个值，可大可小这样
+4. 不用设定 B 直接设定 Q
+5. 老师给了一篇论文，可以检测有没有提高准确性
+
+## 要做的：
+
+1. 把 Kalman 带入 Mediapip
+
+   1. 我先用 x,y 坐标轴：
+      1. 放入 landmarks: 先放 1个关键点 kalman ✓
+      2. 先以图像为中心的坐标轴（原来的坐标轴）-之后以手肘为中心
+      3. 角度的kalman  ✓
+
+2. 之后会给仪器，给定身体上真实的坐标轴
+
+   1. 考虑怎么把 3D 的转为 2D
+
+      
+   
+
+# 第十一周 10.1-14.01
 
 ## 开始动笔写一部分论文
 
-1. 论文 模板？ 排版，字体字号，latex 模板
+1. 论文 模板？ 排版，字体字号，latex 模板 ,30 页, 从哪些开始算？ Titil 算？ 文献算？
+
+## 代码完善
+
+1. 公式写出来，F 怎么算，Q 怎么算，r 怎么算
+
+2. 我想优化所有33个Landmarke。我首先为1个点做了一个卡尔曼滤波器。如图所示。
+
+   我有两个想法。
+   1.建立33个卡尔曼过滤器。
+   2.建立一个卡尔曼滤波器。每个地标有4种状态，共有33个Landmarke。那么x就是（4**33）*（1）Matrix。
+
+   对于第二种想法，我不确定。因为如图片所示。如果我用2个地标建立一个卡尔曼滤波器。D看起来并不好。我怀疑的原因是：卡尔曼滤波器只能计算一个点，因为多个点不是线性的。
+
+3. 全身的点连成新的线.
+
+## Frage stellen: 老师讨论
+
+Über Kalman-Filter von Armwinkel möchte ich einige Frage stellen. Vorher denke wir, dass wir zwei Kalman-Filter brauchen, um die Genauigkeit zu verbessern. Ein ist für nach oben gehen, andere ist für nach unter gehen. Wie kann man diese 2 Kalman-Filter aufbauen? Ich habe folgenden unvollständigen Idee:
+
+1. Zwei unterschiedliche Kalman-Filter aufbauen. Ich setze Richtung oben ist positiv und Unter ist negativ. Die Winkel ist immer positiv in zwischen 30°-180° (Ideale Situation), die Beschleunigung und die Änderung der Beschleunigung kann positiv und negative sein. Dann ich setzt diese 3 Variable anfangen immer positiv sein. Wie Bild zeigt. Ich möchte wissen, ob ich ein richtig Modul bilden?![Winkel Kalman](/Volumes/Life/OneDrive - stud.tu-darmstadt.de/Darmstadt/Arbeit/Papers/Winkel Kalman.jpeg)
+
+2. Zwei gleiche Kalman-Filter aufbauen. Sie sind in passende Zeitpunkt gewelchselt werden. Einen von sie wird aktiviert, wenn die Winkel sich vergrößern. Andere wird aktiviert, wenn die Winkel sich verkleinern.
+
+3. Wie kann man die Zeitpunkt für Wechsel der Kalman-Filter richtig setzten? Meine Meinung nach ist die Zeitpunkt, wann Winkelgeschwindigkeit gleich 0 ist. Wie denkst du?
+
+   -------------------------------------------------------------------------------
+
+4. Und Ich möchte alle 33 Landmarken optimieren dann die verbinden, denn die optimierenden Ergebnisse kann im Bildschirm ersichtlich sein. Ich habe zuerst einen Kalman-Filter für 1 Punkt gemacht. Wie Bild zeigt.![x,y_Kalman](/Volumes/Life/OneDrive - stud.tu-darmstadt.de/Darmstadt/Arbeit/Papers/x,y_Kalman.jpeg)
+
+5. Dann machte ich weiter. An Anfangen hatte Ich 2 Gedanken:
+   1. 33 Kalman-Filter aufbauen.
+   2. Ein Kalman-Filter aufbauen. Jede Landmarke hat 4 Status und es gibt 33 Landmarke. Dann State ist ein [4*33]x[1] Matrix.
+      1. Für 2. Gedanken wird wie folgendes Bild zeigt. Falls ich einen Kalman-Filter mit 2 Landmarken aufbauen. D sieht nicht gut aus. Den Grund vermute ich: Kalman-Filter kann nur ein Punkt rechnen. Mehrere Punkte sind nicht passend. Aber Warum?
+
+![2_Punkt_Kalman](/Volumes/Life/OneDrive - stud.tu-darmstadt.de/Darmstadt/Arbeit/Papers/2_Punkt_Kalman.jpeg)
+
+\--------------------------------------------------------------------------------
+
+Ich bin nicht sicher ob Optimierung für alle Punkt nötig ist. Denn durch Winkelzähler kann man schon die Unterschiede sehen.
+
+------------------------------------------------------------
+
+### 第二部分讨论
+
+1. simulated annealing：
+   1. zu urteilen, ob Ergbnis gut genug ist und ob zu nächte Status gehen 
+   2. Aufforderung der Zustand ist/ 2 Voraussetzung: Rechnen bis (gegebene) genuge Mal oder Ergbnis genuge gut.
+   3. 
+2. **Fragen: ** wie kann Kalman Filler vorige Status bleiben ? oder 
+
+## 读老师给得文献
+
+Optimization and Filtering for Human Motion Capture
+
+A Multi-layer Framework
+
+1. 摘要 局部优化和排序已被广泛地应用于基于模型的三维人体运动捕捉。全局随机优化最近被提出来作为跟踪和初始化的有前途的替代解决方案。为了从优化和调整中获益，我们引入了一个多层框架，将随机优化、调整和局部优化结合起来。第一层依赖于交互式模拟退火（**simulated annealing**）和一些关于物理约束的弱先验信息，第二层则通过修正和局部优化对估计值进行修正，从而提高精确度，并在不对动力学施加限制的情况下逐步解决模糊问题。在我们的实验评估中，我们证明了多层框架的显著改进，并为完整的HumanEva-II数据集提供了定量的三维姿势跟踪结果。本文还包括全局随机优化与粒子修正、退火粒子修正和局部优化的比较。
+
+## 构架
+
+1. simulated annealing:
+   1. 算法思想为：先从一个较高的初始温度出发，逐渐降低温度，直到温度降低到满足热平衡条件为止。在每个温度下，进行n轮搜索，每轮搜索时对旧解添加随机扰动生成新解，并按一定规则接受新解。
 
 
+
+
+
+## 关于角度计算：
+
+1. Artan2 ：unabhängig von positiv oder negative
+2. https://stackoverflow.com/questions/7235839/calculating-the-angle-between-the-horizontal-and-a-line-through-two-points
+3. https://pythonmana.com/2021/12/202112111704472145.html
+4. https://blog.csdn.net/m0_37316917/article/details/102728869
+
+
+
+## 讨论完要做的事：
+
+1. 修正角度。30->45 ✓
+2. 33 个点优化
+   1. 分成小块 33 个一个点的,合成一个一个大的，其实 就是造 一个大的 kalman 然后位置更好确定。
+   2. 分块矩阵 np.block ✗
+   3. 无法确定能否成功，先用 2个点来试试
+      1. 没有成功：
+      2. 考虑：其实是卡尔曼滤波器多目标跟踪 （然后查到：多目标我们一般不会去用Kalman，而是用粒子滤波和PHD滤波。但也找到这个： https://blog.51cto.com/u_15287693/3026290
+      3. 在检测很准的情况下，现在基于的深度学习的检测算法，比如ssd都可以较为准备的检测目标，但是不论检测有多准，漏检的问题是无法避免的，比如目标间相互遮挡，等等，甚至就是漏检。当发生这种情况时才能体现出卡尔曼滤波的作用，虽然我没有检测到，但是我能根据之前的运动状态估算出当前目标的位置，当目标再次出现时重新跟踪上目标，我认为这一点是kalman的意义所在。
+      4. 并没有！！ 找到相关资料，是 H 设置有问题：https://www.kalmanfilter.net/stateUpdate.html
+      5. 有个问题，就是在一个点的时候，**Q 设置不对，只能设为单位矩阵，按照算法算出，带入结果是错的。**
+         1. 决定造 33 个 Kalman，放到 list 里面，index 0：(x,y), index 1 :每个位置对应一个 kalmanfilter，index 2: 预测的(x,y)
+3. 两个相同的 kalman 来判定上下的标准
+   1. vorzeichen ändern？
+   1. State. 为什么只做到速度而不是做到加速度, 建模的时候要注意。看看文献找到答案
+4. 正面，侧面的判定（通过 unteramt 的臂长变化）
+5. 灭火原理，判定优化和不和标准。
 
 
 
