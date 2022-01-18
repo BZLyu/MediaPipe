@@ -67,3 +67,6 @@ git pull --unshallow
       # Hello World!
       # Hello World!
       ```
+
+# 配置 Pycharm:
+

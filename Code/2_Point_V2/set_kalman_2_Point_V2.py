@@ -5,9 +5,10 @@ import cv2
 import numpy as np
 import math
 
+
 def set_kalman():
     # TODO: Set KalmanFilter
-    kalman = cv2.KalmanFilter(4, 2)  # (x，y，dx，dy) # x1,y1,dx1,dy1,x2,y3,dx2,dy2
+    kalman = cv2.KalmanFilter(8, 4)  # x1,y1,dx1,dy1,x2,y3,dx2,dy2
     # TODO: set D
     d = np.zeros((4, 4))
     d[0][2] = 1
@@ -17,22 +18,24 @@ def set_kalman():
     #   print("D = ")
     # print(D)
     # TODO: Reset D:
-    d = new_d(d, 1)
+    d = new_d(d, 2)  # 2 is number of point
     # TODO: set measurementMatrix H
-    # kalman.measurementMatrix = np.array([[1, 0, 0, 0], [0, 1, 0, 0]], np.float32)
-    kalman.measurementMatrix = np.array(get_h(2, 4), np.float32)  # get_H(num_measurement,num_state):
+    kalman.measurementMatrix = np.array([[1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 0, 0, 1, 0, 0]], np.float32)
+    # kalman.measurementMatrix = np.array(get_h(4, 8), np.float32)  # get_H(num_measurement,num_state):
 
     # TODO: set transitionMatrix F
     # kalman.transitionMatrix = np.array([[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]],np.float32)
-    # get_f new_D(D,n): #n number of point
     f = get_f(d, 1, 1)  # (D,n,t)
 
     kalman.transitionMatrix = np.array(f, np.float32)
     # kalman.transitionMatrix = np.array([[1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32)
     # TODO: Set processNoiseCov Q
-    # kalman.processNoiseCov = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32)  # * 0.03
-    q = get_q(d, f)
-    kalman.processNoiseCov = np.array(q, np.float32) * 0.03
+    kalman.processNoiseCov = np.array([[1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0],
+                                      [0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0],
+                                      [0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 1, 0]], np.float32)  # * 0.03
+    # q = get_q(d, f)
+    # kalman.processNoiseCov = np.array(q, np.float32) * 0.03
 
     print("D:", d)
     print("measurementMatrix H:", kalman.measurementMatrix)
