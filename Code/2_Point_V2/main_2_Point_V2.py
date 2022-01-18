@@ -3,8 +3,6 @@ import mediapipe as mp
 import numpy as np
 import math
 import set_kalman_2_Point_V2
-mp_drawing = mp.solutions.drawing_utils
-mp_pose = mp.solutions.pose
 
 
 def calculate_angle(a, b, c):
@@ -19,6 +17,7 @@ def calculate_angle(a, b, c):
 
 
 def video():
+
     cap = cv2.VideoCapture(0)
     kalman = set_kalman_2_Point_V2.set_kalman()
     # Curl counter variables
@@ -115,6 +114,9 @@ def video():
 
 
 if __name__ == '__main__':
+    mp_drawing = mp.solutions.drawing_utils
+    mp_pose = mp.solutions.pose
+
     video()
     print("End!")
 
