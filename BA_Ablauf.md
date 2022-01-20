@@ -55,7 +55,7 @@
 
 # 第三周 22.11-26.11
 
-##看论文
+## 看论文
 
 1.  **A Kalman Filtering Based Data Fusion for Object Tracking**
 
@@ -503,7 +503,7 @@ A Multi-layer Framework
 
 ## 讨论完要做的事：
 
-1. 修正角度。30->45 ✓
+1. 修正角度。30->40 ✓
 2. 33 个点优化
    1. 分成小块 33 个一个点的,合成一个一个大的，其实 就是造 一个大的 kalman 然后位置更好确定。
    2. 分块矩阵 np.block ✗
@@ -524,5 +524,71 @@ A Multi-layer Framework
 
 
 
+# 接着做：
 
+1. 决定造 33 个 Kalman，放到 list 里面，index 0：(x,y), index 1 :每个位置对应一个 kalmanfilter，index 2: 预测的(x,y)：完成
+
+2. 输出新的点
+
+   点位置变差了！！！-> Q 不能设置为单位矩阵 最后我的 Q 设为 单位矩阵+算出来的矩阵
+
+   这里要注意 不要把 kalmanfiler 设置到了方法里面，不然就是不停的造新的 kalman 而不是用的同一个
+
+   完成
+
+3. 判断手臂运动的方式( 正面还是侧面 )
+   1. 通过 unteramt 的臂长变化 // 不行，因为这个也和速度有关！
+   1. 无法做到完美！
+
+4. 两个相同的 kalman 来判定上下的标准
+   1. vorzeichen ändern？
+   1. State. 为什么只做到速度而不是做到加速度, 建模的时候要注意。看看文献找到答案
+
+5. 
+
+
+
+Frage stellen：
+
+1. 怎么建造的 Kalman，与之前讨论的方法有些相似，但并不完全相同
+   1. 
+
+1. 通过 unteramt 变化判断位置不行：
+   1. 侧面可以很准确了，但是正面不行，或许可以通过两个判断，手腕和肩膀的距离
+2. 论文：
+   1. 题目有些大，需要改成：kalman 在 Mediapipe 上实现动作预测， Kalman 滤波器在 AI Framework( Mediapipe )上的应用动作追踪
+   1. 30 Seite ：包不包括录目和索引？
+   1. 初稿？修改需要多久时间？
+   1. 有没有模板？字体，排版。
+
+​	Was ich machte：
+
+1. Alle punkt haben ihre eigenen KalmanFilter. Diese Filter werden in einer Liste zusammengefasst.
+
+2. Ich hatte Probleme, wenn ich Q setzten. Eigentlich wären erst Zeile und erste Spalte null. Aber dort gibt mathmatisch problem. die Ausgabe sind alle falsch. Deswegen plus Q nochal ein einheit matrix. Dann ist die Erbebniss richtig sind.
+
+   
+
+1. Robut kann die Köper richtung nicht gut kennen.
+   1. seitig：Das Handgelenk befindet sich immer auf der linken Seite der Schulter. Diffenzit 0.060
+
+
+
+Thesis: 
+
+Meines Erachtens wird die Erkennung durch den Kalmanfilter genauer. Aber da wir die Daten nicht zurückbringen, was ist der Zweck des Kalmanfilters? Wir schauen einfach hinaus und sagen die Entwicklung voraus.
+
+1. Ob ich meinen Titel von Thesis ändern soll?  ” Vergleich und Analyse kamerabasierter Bewegungserkennung und -bewertung“ 
+2. Zu groß. “ kalman für die Bewegungsvorhersage auf Mediapipe.” Oder “Kalman-Filter zur Bewegungsverfolgung auf AI Framework(Meidapipe)”
+3. vorhersagen ist fast 30 Seitig Paper. Erster Entwurf 
+4. Gibt es Beispiel für Schriftsatz. 
+
+和老师讨论后的结果：
+
+1. 先测手臂变化，在根据点的速度判断正面还是侧面
+2. 检查，人站的远和近有区别吗？
+3. 做两个 kalman，在哪里转换，需要思考
+4. 下半部分不检测，沿用上一个状态，因为下半部分太难检测了
+5. 上半部分不准确，还可以通过手肘的x 点，与肩膀 x点的距离来判断。近的话是正面，远的话是侧面。
+6. 没有讨论论文。
 

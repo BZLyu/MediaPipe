@@ -21,7 +21,7 @@ def set_kalman():
     d = new_d(d, 2)  # 2 is number of point
     # TODO: set measurementMatrix H
     kalman.measurementMatrix = np.array([[1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0],
-                                         [0, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 0, 0, 1, 0, 0]], np.float32)
+                                         [0, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0]], np.float32)
     # kalman.measurementMatrix = np.array(get_h(4, 8), np.float32)  # get_H(num_measurement,num_state):
 
     # TODO: set transitionMatrix F
@@ -31,10 +31,15 @@ def set_kalman():
     kalman.transitionMatrix = np.array(f, np.float32)
     # kalman.transitionMatrix = np.array([[1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32)
     # TODO: Set processNoiseCov Q
-    kalman.processNoiseCov = np.array([[1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0],
-                                      [0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0],
-                                      [0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 1, 0]], np.float32)  # * 0.03
-    # q = get_q(d, f)
+    kalman.processNoiseCov = np.array([[1, 0, 0, 0, 0, 0, 0, 0],
+                                       [0, 1, 0, 0, 0, 0, 0, 0],
+                                       [0, 0, 1, 0, 0, 0, 0, 0],
+                                       [0, 0, 0, 1, 0, 0, 0, 0],
+                                       [0, 0, 0, 0, 1, 0, 0, 0],
+                                       [0, 0, 0, 0, 0, 1, 0, 1],
+                                       [0, 0, 0, 0, 0, 0, 1, 0],
+                                       [0, 0, 0, 0, 0, 1, 0, 1]], np.float32)  # * 0.03
+    # q = get_q(d, f) + np.eye(4)
     # kalman.processNoiseCov = np.array(q, np.float32) * 0.03
 
     print("D:", d)

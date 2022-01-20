@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import math
-import set_kalman_2_Point_V2
+import kalman_points
 
 
 def calculate_angle(a, b, c):
@@ -19,7 +19,7 @@ def calculate_angle(a, b, c):
 def video():
 
     cap = cv2.VideoCapture(0)
-    kalman = set_kalman_2_Point_V2.set_kalman()
+
     # Curl counter variables
     counter = 0
     stage = None
@@ -60,29 +60,14 @@ def video():
             wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
                      landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
 
-            current_x1 = np.float32(shoulder[0])
-            current_y1 = np.float32(shoulder[1])
-            current_x2 = np.float32(elbow[0])
-            current_y2 = np.float32(elbow[1])
-            # print("current_x:", current_x, "current_y:", current_y)
-            #
-            current_measurement = np.array([[current_x1], [current_y1], [current_x2], [current_y2]])
-            print("current_measurement", current_measurement)
-            kalman.correct(current_measurement)
-            # print("new_current_measurement", current_measurement)
-            #
-            current_prediction = kalman.predict()
-            print("current_prediction", current_prediction)
-
-            # new_shoulder = [[float(current_prediction[0]),float(current_prediction[1])]]
-            # print('new: ',new_shoulder)
+            prediction = kalman_points.all_points(landmarks, mp_pose)
+            # print("prediction: ", prediction.shape)
+            new_shoulder = prediction[13]
+            # print("old_shoulder", shoulder)
+            # print("new_shoulder", new_shoulder)
 
             # Calculate angle
             angle = calculate_angle(shoulder, elbow, wrist)
-
-            # current_measurement = np.array([angle])
-            #  kalman.correct(current_measurement)
-            #  current_prediction = kalman.predict()
 
             # Curl counter logic
             if angle > 160:
@@ -95,14 +80,25 @@ def video():
             # Visualize angle
 
             # position=tuple(np.multiply(elbow, [640,480]).astype(int))
-            position = (100, 100)
             font = cv2.FONT_HERSHEY_SIMPLEX
-            cv2.putText(image, str(counter), position, font, 2, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(image, str(counter), (100, 100), font, 2, (255, 255, 255), 2, cv2.LINE_AA)
 
             # print (landmarks)
 
             # Render detections
+
+            point_new = tuple(np.multiply(new_shoulder, [1280, 720]).astype(int))
+            point_old = tuple(np.multiply(elbow, [1280, 720]).astype(int))
+            cv2.circle(image, point_new, 10, (255, 255, 255), -1)
+            cv2.circle(image, point_old, 10, (0, 0, 255), -1)
+
+            # [640, 480]
+
             mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+
+# float(new_shoulder[0]), float(new_shoulder[1])
+# cv2.circle(输入的图片data,圆心位置,圆的半径,圆的颜色,圆形轮廓的粗细（如果为正）负数(-1)表示要绘制实心圆,圆边界的类型,中心坐标和半径值中的小数位数)
+            # mp_drawing.draw_landmarks(image,)
             cv2.imshow("Mediapipe Feed", image)
 
             if cv2.waitKey(10) & 0xFF == ord('q'):
@@ -119,5 +115,3 @@ if __name__ == '__main__':
 
     video()
     print("End!")
-
-

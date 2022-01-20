@@ -8,7 +8,7 @@ import math
 
 def set_kalman():
     # TODO: Set KalmanFilter
-    kalman = cv2.KalmanFilter(4, 2)  # (x，y，dx，dy)
+    kalman = cv2.KalmanFilter(4, 2)  # (x，y，dx，dy) # x1,y1,dx1,dy1,x2,y3,dx2,dy2
     # TODO: set D
     d = np.zeros((4, 4))
     d[0][2] = 1
@@ -26,22 +26,23 @@ def set_kalman():
     # TODO: set transitionMatrix F
     # kalman.transitionMatrix = np.array([[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]],np.float32)
     # get_f new_D(D,n): #n number of point
-    f = get_f(d, 1, 0.5)  # (D,n,t)
+    f = get_f(d, 1, 1)  # (D,n,t)
 
     kalman.transitionMatrix = np.array(f, np.float32)
     # kalman.transitionMatrix = np.array([[1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32)
     # TODO: Set processNoiseCov Q
     # kalman.processNoiseCov = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32) * 0.03
     q = get_q(d, f) + np.eye(4)
-    kalman.processNoiseCov = np.array(q, np.float32)
+    kalman.processNoiseCov = np.array(q, np.float32)  # * 0.03
     # q = [[0, 0, 0, 0], [0, 0.03, 0, 0.03], [0, 0, 0, 0], [0, 0.03, 0, 0.03]]
     # q = [[0, 0, 0, 0], [0, 1, 0, 1], [0, 0, 0, 0], [0, 1, 0, 1]]
 
-    print("D:", d)
-    print("measurementMatrix H:", kalman.measurementMatrix)
-    print("transitionMatrix F: ", kalman.transitionMatrix)
-    print("processNoiseCov Q:", kalman.processNoiseCov)
+    # print("D:", d)
+    # print("measurementMatrix H:", kalman.measurementMatrix)
+    # print("transitionMatrix F: ", kalman.transitionMatrix)
+    # print("processNoiseCov Q:", kalman.processNoiseCov)
     return kalman
+
 
 # D ^n:
 def matrixpow(matrix, n):
