@@ -13,7 +13,8 @@ def set_kalman_angle():
     kalman.measurementMatrix = np.array([[1, 0, 0, 0]], np.float32)
 
     # transitionMatrix F
-    kalman.transitionMatrix = np.array([[1, delta_t, 0.5*delta_t**2, (1/6)*delta_t**3], [0, 1, delta_t, 0.5*delta_t**2],
+    kalman.transitionMatrix = np.array([[1, delta_t, 0.5*delta_t**2, (1/6)*delta_t**3],
+                                        [0, 1, delta_t, 0.5*delta_t**2],
                                         [0, 0, 1, delta_t], [0, 0, 0, 1]], np.float32)
     # processNoiseCov Q
     kalman.processNoiseCov = np.array([[(1/36)*delta_t**6, (1/12)*delta_t**5, (1/6)*delta_t**4, (1/6)*delta_t**3],

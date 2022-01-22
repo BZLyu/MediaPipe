@@ -2,260 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="efffefa6-f167-48b5-8692-5e27cd9e663a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Code/Points/kalman_points.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/Points_Angle/View.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/Points_Angle/kalman_angle.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/Points_Angle/kalman_points.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/Points_Angle/main_Points_angle.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/Points_Angle/set_kalman_Points.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/Points_Angle/set_kalman_angle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MediaPipe.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MediaPipe.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_dddx/View.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_dddx/kalman_points.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_dddx/main_Points_dddx.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_dddx/set_kalman_Points.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_ddx/View.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_ddx/kalman_angle.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_ddx/kalman_points.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_ddx/set_kalman_Points.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/Points_Angle_ddx/set_kalman_angle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BA_Ablauf.md" beforeDir="false" afterPath="$PROJECT_DIR$/BA_Ablauf.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/1_Point/main_1_Point.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/1_Point/main_1_Point.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/1_Point.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/1_Point/set_kalman_1_Point.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/1_Point/set_kalman_1_Point.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/2_Point/main_2_Point.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/2_Points/main_2_Point.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/2_Point/set_kalman_2_Point.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/2_Points/set_kalman_2_Point.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/2_Point_V2/main_2_Point_V2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Points/main_Points.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/2_Point_V2/set_kalman_2_Point_V2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Points/set_kalman_Points.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/Erro/No module named cv2 and mediapipe.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/Erro/Unresolved attribute reference.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/Erro/unindent does not match any outer indentation level .md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_full_range.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_full_range_common.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_full_range_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_full_range_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_full_range_image.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_full_range_sparse.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_short_range.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_short_range_by_roi_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_short_range_by_roi_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_short_range_common.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_short_range_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_short_range_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_detection/face_detection_short_range_image.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/data/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/data/canonical_face_model.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/data/canonical_face_model.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/data/canonical_face_model_uv_visualization.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/data/geometry_pipeline_metadata_detection.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/data/geometry_pipeline_metadata_landmarks.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/effect_renderer_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/effect_renderer_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/env_generator_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/env_generator_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/face_geometry.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/face_geometry_from_detection.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/face_geometry_from_landmarks.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/geometry_pipeline_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/geometry_pipeline_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/effect_renderer.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/effect_renderer.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/geometry_pipeline.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/geometry_pipeline.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/mesh_3d_utils.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/mesh_3d_utils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/procrustes_solver.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/procrustes_solver.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/validation_utils.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/libs/validation_utils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/protos/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/protos/environment.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/protos/face_geometry.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/protos/geometry_pipeline_metadata.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_geometry/protos/mesh_3d.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_detection_front_detection_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_front_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_front_cpu_image.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_front_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_front_gpu_image.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_front_side_model_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_front_side_model_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_landmarks_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmark_with_attention.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/face_landmarks_model_loader.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/tensors_to_face_landmarks.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/face_landmark/tensors_to_face_landmarks_with_attention.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/calculators/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/calculators/hand_landmarks_to_rect_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_full.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_landmarks_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_lite.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_model_loader.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_tracking_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_tracking_cpu_image.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_tracking_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/hand_landmark_tracking_gpu_image.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/handedness.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/hand_landmark/palm_detection_detection_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/calculators/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/calculators/hand_detections_from_pose_to_rects_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/calculators/roi_tracking_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/calculators/roi_tracking_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/face_detection_front_detections_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/face_landmarks_from_pose_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/face_landmarks_from_pose_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/face_landmarks_from_pose_to_recrop_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/face_landmarks_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/face_tracking.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_landmarks_from_pose_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_landmarks_from_pose_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_landmarks_from_pose_to_recrop_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_landmarks_left_and_right_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_landmarks_left_and_right_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_landmarks_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_recrop.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_tracking.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_visibility_from_hand_landmarks_from_pose.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/hand_wrist_for_pose.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/holistic_landmark_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/holistic_landmark/holistic_landmark_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/iris_landmark/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/iris_landmark/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/iris_landmark/iris_landmark.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/iris_landmark/iris_landmark_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/iris_landmark/iris_landmark_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/iris_landmark/iris_landmark_landmarks_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/iris_landmark/iris_landmark_left_and_right_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/iris_landmark/iris_landmark_left_and_right_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/box_landmark_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/box_landmark_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/a_r_capture_metadata.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/annotation_data.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/belief_decoder_config.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/box.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/box.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/box_util.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/box_util.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/box_util_test.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/camera_parameters.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/decoder.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/decoder.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/epnp.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/epnp.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/epnp_test.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/filter_detection_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/filter_detection_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/frame_annotation_to_rect_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/frame_annotation_to_rect_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/frame_annotation_to_timed_box_list_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/frame_annotation_tracker.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/frame_annotation_tracker.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/frame_annotation_tracker_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/frame_annotation_tracker_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/frame_annotation_tracker_test.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/landmarks_to_frame_annotation_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/lift_2d_frame_annotation_to_3d_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/lift_2d_frame_annotation_to_3d_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/model.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/model.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/object.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/tensor_util.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/tensor_util.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/tensors_to_objects_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/tensors_to_objects_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/tflite_tensors_to_objects_calculator.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/tflite_tensors_to_objects_calculator.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/calculators/types.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_3d_camera.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_3d_chair.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_3d_chair_1stage.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_3d_cup.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_3d_sneakers.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_3d_sneakers_1stage.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_oid_v4_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_oid_v4_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_oidv4_labelmap.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/objectron_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/objectron_detection_1stage_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/objectron_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/objectron/objectron_tracking_1stage_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/palm_detection/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/palm_detection/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/palm_detection/palm_detection_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/palm_detection/palm_detection_full.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/palm_detection/palm_detection_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/palm_detection/palm_detection_lite.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/palm_detection/palm_detection_model_loader.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_detection/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_detection/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_detection/pose_detection.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_detection/pose_detection_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_detection/pose_detection_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_detection_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_by_roi_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_by_roi_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_filtering.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_full.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_heavy.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_lite.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_model_loader.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmark_topology.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmarks_and_segmentation_inverse_projection.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_landmarks_to_roi.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/pose_segmentation_filtering.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/pose_landmark/tensors_to_pose_landmarks_and_segmentation.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/BUILD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/selfie_segmentation.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/selfie_segmentation_cpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/selfie_segmentation_cpu_image.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/selfie_segmentation_gpu.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/selfie_segmentation_gpu_image.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/selfie_segmentation_landscape.tflite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/modules/selfie_segmentation/selfie_segmentation_model_loader.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/download_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/drawing_styles.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/drawing_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/drawing_utils_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/face_detection.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/face_detection_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/face_mesh.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/face_mesh_connections.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/face_mesh_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/hands.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/hands_connections.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/hands_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/holistic.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/holistic_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/objectron.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/objectron_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/pose.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/pose_connections.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/pose_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/selfie_segmentation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/solutions/selfie_segmentation_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/2_Points.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/2_Points/main_2_Point.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/2_Points/main_2_Point.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/2_Points/set_kalman_2_Point.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/2_Points/set_kalman_2_Point.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Counter/Counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Counter/Counter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Points/set_kalman_Points.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Points/set_kalman_Points.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Points_Angle.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Points_Angle/View.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Counter/View.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Points_Angle/kalman_angle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Points_Angle_dddx/kalman_angle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Points_Angle/kalman_points.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Points_Angle/main_Points_angle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Points_Angle_ddx/main_Points_ddx.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Points_Angle/set_kalman_Points.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/Points_Angle/set_kalman_angle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/Points_Angle_dddx/set_kalman_angle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,18 +67,38 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Code/Points_Angle" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Code/Counter" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Code/Points_Angle" />
+      <recent name="$PROJECT_DIR$/Code/Counter" />
       <recent name="$PROJECT_DIR$/Code" />
+      <recent name="$PROJECT_DIR$/Code/Points_Angle" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main_2_Point">
+  <component name="RunManager" selected="Python.Counter">
+    <configuration name="Counter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MediaPipe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Code/Counter" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Code/Counter/Counter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="MediaPipe" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -329,32 +121,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_1_Point" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main_2_Point" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MediaPipe" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Code/1_Point" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Code/1_Point/main_1_Point.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main_2_Point" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="MediaPipe" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Code/2_Points" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -363,7 +136,7 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Code/2_Points/main_2_Point.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
@@ -414,18 +187,39 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main_Points_dddx" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MediaPipe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Code/Points_Angle_dddx" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Code/Points_Angle_dddx/main_Points_dddx.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.main_Points" />
-      <item itemvalue="Python.main_1_Point" />
       <item itemvalue="Python.main_Points_angle" />
       <item itemvalue="Python.main_2_Point" />
+      <item itemvalue="Python.main_Points_dddx" />
+      <item itemvalue="Python.Counter" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main_2_Point" />
+        <item itemvalue="Python.Counter" />
+        <item itemvalue="Python.main_Points_dddx" />
         <item itemvalue="Python.main_Points_angle" />
         <item itemvalue="Python.main_Points" />
-        <item itemvalue="Python.main_1_Point" />
+        <item itemvalue="Python.main_2_Point" />
       </list>
     </recent_temporary>
   </component>
@@ -440,7 +234,8 @@
       <workItem from="1642508303441" duration="10052000" />
       <workItem from="1642524412105" duration="15392000" />
       <workItem from="1642629182748" duration="7286000" />
-      <workItem from="1642698448350" duration="1080000" />
+      <workItem from="1642698448350" duration="33792000" />
+      <workItem from="1642795427552" duration="6937000" />
     </task>
     <servers />
   </component>
@@ -449,6 +244,33 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Code/test.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Code/test.py</url>
+          <line>114</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Code/Points_Angle_ddx/kalman_points.py</url>
+          <line>32</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Code/Points_Angle_ddx/kalman_points.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Code/2_Points/main_2_Point.py</url>
+          <line>78</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -459,8 +281,12 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/MediaPipe$main_Points.coverage" NAME="main_Points Coverage Results" MODIFIED="1642527216280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Points" />
-    <SUITE FILE_PATH="coverage/MediaPipe$main_Points_angle.coverage" NAME="main_Points_angle Coverage Results" MODIFIED="1642685550281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Points_Angle" />
-    <SUITE FILE_PATH="coverage/MediaPipe$main_1_Point.coverage" NAME="main_1_Point Coverage Results" MODIFIED="1642525354787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/1_Point" />
+    <SUITE FILE_PATH="coverage/MediaPipe$main_Points.coverage" NAME="main_Points Coverage Results" MODIFIED="1642797052773" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Points" />
+    <SUITE FILE_PATH="coverage/MediaPipe$Counter.coverage" NAME="Counter Coverage Results" MODIFIED="1642802277257" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Counter" />
+    <SUITE FILE_PATH="coverage/MediaPipe$main_Points_angle.coverage" NAME="main_Points_angle Coverage Results" MODIFIED="1642797213923" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Points_Angle" />
+    <SUITE FILE_PATH="coverage/MediaPipe$main_Points_dddx.coverage" NAME="main_Points_dddx Coverage Results" MODIFIED="1642798094743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Points_Angle_dddx" />
+    <SUITE FILE_PATH="coverage/MediaPipe$main_2_Point.coverage" NAME="main_2_Point Coverage Results" MODIFIED="1642797036621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/2_Points" />
+    <SUITE FILE_PATH="coverage/MediaPipe$main_1_Point.coverage" NAME="main_1_Point Coverage Results" MODIFIED="1642772025566" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/1_Point" />
+    <SUITE FILE_PATH="coverage/MediaPipe$test.coverage" NAME="test Coverage Results" MODIFIED="1642773785771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code" />
   </component>
 </project>

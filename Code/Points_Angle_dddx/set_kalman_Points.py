@@ -9,15 +9,15 @@ import math
 def set_kalman():
     # Todo:set variable
     unit_num_state = 8  # x，y，dx，dy, ddx, ddy, dddx, dddy
-    num_point = 2  # 33 Points
+    num_point = 33  # 33 Points
     num_state = unit_num_state * num_point
     num_dimension = 2  # 2 Dimension(x,y)
     t = 1  # delta t =1
     c = 1  # Change of acceleration
     n_diff = 3  # Number of derivation
 
-    # TODO: set D
-    d = np.zeros((8, 8))
+    # TODO: set unit D
+    d = np.zeros((unit_num_state, unit_num_state))
     d[0][2] = 1
     d[1][3] = 1
     d[2][4] = 1
@@ -26,7 +26,7 @@ def set_kalman():
     d[5][7] = 1
 
     # TODO: Set KalmanFilter
-    kalman = cv2.KalmanFilter(num_state, num_point)  # cv2.KalmanFilter(num_state,num_point)
+    kalman = cv2.KalmanFilter(num_state, num_point*num_dimension)  # cv2.KalmanFilter(num_state,observation)
     # (x，y，dx，dy, ddx, ddy, dddx, dddy)
     # x1,y1,dx1,dy1,ddx1,ddy1,dddx1,dddy1, x2,y2,dx2,dy2, ddx2, ddy2, dddx2, dddy2
 
@@ -35,11 +35,11 @@ def set_kalman():
     kalman.measurementMatrix = np.array(h, np.float32)
 
     # TODO: set transitionMatrix F
-    # kalman.transitionMatrix = np.array([[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]],np.float32)
+    #
     unif = unit_f(d, n_diff, t)
     f = get_f(unif, num_point)
     kalman.transitionMatrix = np.array(f, np.float32)
-    # kalman.transitionMatrix = np.array([[1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32)
+    #
     # TODO: Set processNoiseCov Q
     q = get_q(unif, num_point, c)
     kalman.processNoiseCov = np.array(q, np.float32) * 0.03
@@ -129,6 +129,3 @@ def get_h(num_point, num_state_total, num_state_each, num_dimension):
         i += num_dimension
     return h
 
-
-if __name__ == '__main__':
-    set_kalman()

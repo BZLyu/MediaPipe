@@ -65,15 +65,23 @@ def video():
             current_y1 = np.float32(shoulder[1])
             current_x2 = np.float32(elbow[0])
             current_y2 = np.float32(elbow[1])
+            current_x3 = np.float32(wrist[0])
+            current_y3 = np.float32(wrist[1])
             # print("current_x:", current_x, "current_y:", current_y)
             #
             current_measurement = np.array([[current_x1], [current_y1], [current_x2], [current_y2]])
+                                            # [current_x3], [current_y3]])
             print("current_measurement", current_measurement)
             kalman.correct(current_measurement)
-            # print("new_current_measurement", current_measurement)
+
             #
             current_prediction = kalman.predict()
-            print("current_prediction", current_prediction)
+            print("prediction:", current_prediction)
+            # print("current_prediction", [current_prediction[0][0], current_prediction[1][0],
+            #                              current_prediction[4][0], current_prediction[5][0],
+            #                              current_prediction[8][0], current_prediction[9][0]])
+            point_new = tuple(np.multiply((current_prediction[0][0], current_prediction[1][0]), [1280, 720]).astype(int))
+            cv2.circle(image, point_new, 10, (0, 100, 0), -1)
             #
             # new_shoulder = [[float(current_prediction[0]),float(current_prediction[1])]]
             # print('new: ',new_shoulder)

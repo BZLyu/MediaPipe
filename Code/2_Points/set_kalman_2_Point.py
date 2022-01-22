@@ -1,4 +1,4 @@
-# Author: Bingzhen Lyu 
+# Author: Bingzhen Lyu
 # Date: 2022/1/14
 # Kalman
 import cv2
@@ -7,40 +7,42 @@ import math
 
 
 def set_kalman():
-    # TODO: Set KalmanFilter
-    kalman = cv2.KalmanFilter(8, 4)  # x1,y1,dx1,dy1,x2,y3,dx2,dy2
-    # TODO: set D
-    d = np.zeros((4, 4))
+    # Todo:set variable
+    unit_num_state = 6  # x，y，dx，dy, ddx, ddy, dddx, dddy
+    num_point = 2  # 2 Points
+    num_state = unit_num_state * num_point
+    num_dimension = 2  # 2 Dimension(x,y)
+    t = 1  # delta t =1
+    c = 1  # Change of acceleration
+    n_diff = 2  # Number of derivation
+
+    # TODO: set unit D
+    d = np.zeros((unit_num_state, unit_num_state))
     d[0][2] = 1
     d[1][3] = 1
-    # D[4][6]=1
-    # D[5][7]=1
-    #   print("D = ")
-    # print(D)
-    # TODO: Reset D:
-    d = new_d(d, 2)  # 2 is number of point
+    d[2][4] = 1
+    d[3][5] = 1
+    # d[4][6] = 1
+    # d[5][7] = 1
+
+    # TODO: Set KalmanFilter
+    kalman = cv2.KalmanFilter(num_state, num_point*num_dimension)  # cv2.KalmanFilter(num_state,observation)
+    # (x，y，dx，dy, ddx, ddy, dddx, dddy)
+    # x1,y1,dx1,dy1,ddx1,ddy1,dddx1,dddy1, x2,y2,dx2,dy2, ddx2, ddy2, dddx2, dddy2
+
     # TODO: set measurementMatrix H
-    kalman.measurementMatrix = np.array([[1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0],
-                                         [0, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0]], np.float32)
-    # kalman.measurementMatrix = np.array(get_h(4, 8), np.float32)  # get_H(num_measurement,num_state):
+    h = get_h(num_point, num_state, unit_num_state, num_dimension)
+    kalman.measurementMatrix = np.array(h, np.float32)
 
     # TODO: set transitionMatrix F
     # kalman.transitionMatrix = np.array([[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]],np.float32)
-    f = get_f(d, 1, 1)  # (D,n,t)
-
+    unif = unit_f(d, n_diff, t)
+    f = get_f(unif, num_point)
     kalman.transitionMatrix = np.array(f, np.float32)
     # kalman.transitionMatrix = np.array([[1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32)
     # TODO: Set processNoiseCov Q
-    kalman.processNoiseCov = np.array([[1, 0, 0, 0, 0, 0, 0, 0],
-                                       [0, 1, 0, 0, 0, 0, 0, 0],
-                                       [0, 0, 1, 0, 0, 0, 0, 0],
-                                       [0, 0, 0, 1, 0, 0, 0, 0],
-                                       [0, 0, 0, 0, 1, 0, 0, 0],
-                                       [0, 0, 0, 0, 0, 1, 0, 1],
-                                       [0, 0, 0, 0, 0, 0, 1, 0],
-                                       [0, 0, 0, 0, 0, 1, 0, 1]], np.float32)  # * 0.03
-    # q = get_q(d, f) + np.eye(4)
-    # kalman.processNoiseCov = np.array(q, np.float32) * 0.03
+    q = get_q(unif, num_point, c)
+    kalman.processNoiseCov = np.array(q, np.float32) * 0.03
 
     print("D:", d)
     print("measurementMatrix H:", kalman.measurementMatrix)
@@ -48,7 +50,7 @@ def set_kalman():
     print("processNoiseCov Q:", kalman.processNoiseCov)
     return kalman
 
-# D ^n:
+# ------------calculation process-------------#
 
 
 def matrixpow(matrix, n):
@@ -58,110 +60,72 @@ def matrixpow(matrix, n):
         return matrix
     else:
         return np.matmul(matrix, matrixpow(matrix, n - 1))
-# F
 
 
-def get_f(d, n, t):  # D, Number of Measurement, delta_t
-    f = 0
-    for i in range(1, n+1):
-        f = f + (matrixpow((d * t), i)) / math.factorial(i)
-    f = f+np.eye(d.shape[0])
+def unit_f(unit_d, n_diff, t):  # unit_d, Number of derivation , delta_t
+    unif = 0
+    for i in range(1, n_diff+1):
+        unif = unif + (matrixpow((unit_d * t), i)) / math.factorial(i)
+    unif = unif+np.eye(unit_d.shape[0])
     # print("f = ")
     # print(f)
-    return f
-
-# H
+    return unif
 
 
-def get_h(num_measurement, num_state):
-    h = np.zeros((num_measurement, num_state))
-    # print(h)
-    for i in range(num_state):
-        for j in range(num_measurement):
+def get_f(unif, n_point):  # n number of point
+    a = n_point*(unif.shape[0])
+    b = n_point*(unif.shape[0])
+
+    new_f = np.zeros((a, b))
+    for i in range(0, new_f.shape[0], unif.shape[0]):
+        for j in range(0, new_f.shape[1], unif.shape[1]):
             if i == j:
-                h[i][j] = 1
-                break
+                for k in range(unif.shape[0]):
+                    for g in range(unif.shape[1]):
+                        new_f[i+k][j+g] = unif[k][g]
+    return new_f
+
+
+def get_r(unif):  # n=number of state
+
+    uni_r = np.zeros((unif.shape[0], 1))  #
+    for i in range(uni_r.shape[0]):
+        uni_r[uni_r.shape[0]-1-i][0] = unif[unif.shape[1]-1-i][unif.shape[0]-1]
+    return uni_r
+
+
+def get_q(unif, n_point, c):
+    unir = get_r(unif)
+    q1 = unir*unir.T
+    # print("q1\n", q1)
+    # print("-------------")
+    q = np.zeros((n_point*unif.shape[0], n_point*unif.shape[0]))
+
+    for i in range(0, q.shape[0], q1.shape[0]):  #
+        for j in range(0, q.shape[1], q1.shape[1]):
+            if i == j:
+                for k in range(q1.shape[0]):
+                    for g in range(q1.shape[1]):
+                        if k == g:
+                            if q1[k][g] == 0:
+                                q[i+k][j+g] = 1
+                                continue
+                        q[i+k][j+g] = q1[k][g]
+
+    q = q * c**2
+    return q
+
+
+def get_h(num_point, num_state_total, num_state_each, num_dimension):
+    h = np.zeros((num_point*num_dimension, num_state_total))
+    # print(h)
+    i = 0
+    if num_point*num_dimension == 1:
+        h[i][0] = 1
+        return h
+    for j in range(0, h.shape[1], num_state_each):
+        h[i][j] = 1
+        h[i+1][j+1] = 1
+        i += num_dimension
     return h
 
-# Q :
-
-
-def get_q(d, f):
-    r = np.zeros((f.shape[1], 1))
-    # print(F[[F.shape[1]-4],[F.shape[1]-1]])
-    # print(F)
-    # print("r.shape",r.shape)
-    copyline = d.shape[0]
-    # print("copyline:",copyline)
-    i = 0
-    j = 0
-
-    while i < r.shape[0]:
-        if j < copyline:
-            #   print("i",i,"j",j)
-            #     print(F[[F.shape[1]-4+j],[F.shape[1]-1]])
-            r[[i], [0]] = f[[f.shape[1] - 4 + j], [f.shape[1] - 1]]
-            j = j+1
-            i = i+1
-        else:
-            j = 0
-
-    #      np.array(r)[0][i]=np.array(F)[i][F.shape[1]-1]
-    # print("r = ")
-    # print(r)
-    #   print("r_T = ")
-    #    print(r.T)
-    q = r*r.T
-    #    print("q =")
-    #    print (q)
-
-    return q
-# 合并
-
-# 33*4=132
-# Z= np.zeros((132,132))
-
-
-def new_d(d, n):  # n number of point
-    #   print("D:")
-    #   print(D)
-    z = np.zeros((d.shape[0] * n, d.shape[0] * n))
-    #    print("new D is ",D.shape[0]*n,"*",D.shape[0]*n,"Matrix")
-    first_one = 0
-    # second_one = 0
-    i = 0
-    b = 0
-    while i < z.shape[0]:
-
-        for j in range(z.shape[1]):
-            if i == j:
-                if first_one == 0:
-                    b = j+2
-                    z[i][b] = 1
-                    first_one = 1
-
-                    # print("i=",i)
-                    #  print("j=",b)
-                    # print("第一个 1：")
-                    # print(z)
-
-                    i = i+1
-                    break
-
-            if first_one == 1:
-                b += 1
-                z[i][b] = 1
-                i = i+3
-                first_one = 0
-
-                # print("i=",i)
-                # print("j=",b)
-                # print("第二个 1：")
-                # print(z)
-
-                if i >= z.shape[0]-1 & b >= z.shape[1]-1:
-                    # print("new D: ")
-                    # print(z)
-                    return z
-                b = 0
-                break

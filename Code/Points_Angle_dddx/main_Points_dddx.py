@@ -27,11 +27,11 @@ def video():
 
     cap = cv2.VideoCapture(0)
     kalman_angle_origin = set_kalman_angle.set_kalman_angle()
-
-    list_kalman = np.ones((33, 1), cv2.KalmanFilter)
-    # make 33 kalman
-    for i in range(len(list_kalman)):
-        list_kalman[i] = set_kalman_Points.set_kalman_points()
+    point_kalman = set_kalman_Points.set_kalman()
+    # # make 33 kalman
+    # list_kalman = np.ones((33, 1), cv2.KalmanFilter)
+    # for i in range(len(list_kalman)):
+    #     list_kalman[i] = set_kalman_Points.set_kalman_points()
 
     # Curl counter variables
     counter = 0
@@ -69,7 +69,7 @@ def video():
                 continue
 
             landmarks = results.pose_landmarks.landmark
-            # landmarks[12].x
+
             shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
                         landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
 
@@ -114,15 +114,19 @@ def video():
 
 # TODO: show all new points.
 
-            prediction = kalman_points.all_points(list_kalman, landmarks)
+            prediction = kalman_points.all_points(point_kalman, landmarks)
             # point_new = tuple(np.multiply(prediction, [1280, 720]).astype(int))
+            # print(prediction)
+            # point_new = tuple(np.multiply(prediction[13], [1280, 720]).astype(int))
+            # cv2.circle(image, point_new, 10, (0, 100, 0), -1)
 
+# todo: show new points
             for i in range(len(prediction)):
                 point_new = tuple(np.multiply(prediction[i], [1280, 720]).astype(int))
                 cv2.circle(image, point_new, 5, (0, 100, 0), -1)
+# todo: connect line
 
             for i in mp_pose.POSE_CONNECTIONS:
-
                 start_point = tuple(np.multiply(prediction[i[0]], [1280, 720]).astype(int))
                 end_point = tuple(np.multiply(prediction[i[1]], [1280, 720]).astype(int))
                 cv2.line(image, start_point, end_point, (0, 100, 0), 2)
