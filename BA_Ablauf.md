@@ -571,17 +571,8 @@ Frage stellen：
 
 1. Robut kann die Köper richtung nicht gut kennen.
    1. seitig：Das Handgelenk befindet sich immer auf der linken Seite der Schulter. Diffenzit 0.060
-
-
-
-Thesis: 
-
-Meines Erachtens wird die Erkennung durch den Kalmanfilter genauer. Aber da wir die Daten nicht zurückbringen, was ist der Zweck des Kalmanfilters? Wir schauen einfach hinaus und sagen die Entwicklung voraus.
-
-1. Ob ich meinen Titel von Thesis ändern soll?  ” Vergleich und Analyse kamerabasierter Bewegungserkennung und -bewertung“ 
-2. Zu groß. “ kalman für die Bewegungsvorhersage auf Mediapipe.” Oder “Kalman-Filter zur Bewegungsverfolgung auf AI Framework(Meidapipe)”
-3. vorhersagen ist fast 30 Seitig Paper. Erster Entwurf 
-4. Gibt es Beispiel für Schriftsatz. 
+   
+      
 
 和老师讨论后的结果：
 
@@ -649,7 +640,97 @@ Meines Erachtens wird die Erkennung durch den Kalmanfilter genauer. Aber da wir 
 
 # 第十三周 24.01-28.01
 
+## 和老师讨论前，计划：
+
+1. 开始写 Introduction
+1. 手不动，角度一样会增加。为什么？kalman 会不停地带入？
+1. Nachdem ich mich ein- oder zweimal bewegt habe, erhöht sich die Anzahl der Bewegungen, auch wenn sich die Hand nicht bewegt, und Kalman denkt, dass ich mich immer noch bewege.
+1. Wird Kalman weiterhin von der nächsten Stufe ausgehen? Oder ist es möglich, dort anzuhalten und zu warten
+1. Einfügen Punkt
+
+## 和老师讨论后：
+
+
+
+1. Cv2 的 kalman 不好用，或许可以换一个可以设置 state 的 kalman
+1. Zustand als reset Punkt Kalman.
+2. Oder Jede Mal new KalmanFilter aufbauen.
+3. Show wann up, down.
+4. mehr als 1 Punkt entscheiden sich bewegen.
+5. Paper lesen warum ddx dddx gilt nicht.
+6. 1 Monate BA schreiben. 
+
+
+
+# 第十四周 31.01 - 04.02
+
+1. 老师的标准点做好了
+
+2. 看之前老师给的 paper 找解释为什么 ddx ，和 dddx 不能用。
+   1. Fast_and_Fluid_Human_Pose_Tracking
+
+   2. Given the limited bandwidth of human motion dynamics, and the fact that Kalmanfilter measurements can be obtained faster than typical video framerates, we assume that the state estimation error between two measurements updates is sufﬁciently bounded using a simple kinematic model, which does not include body points acceleration.
+
+   3. Der erste Grund ist die begrenzte Bandbreite der menschlichen Bewegungsdynamik.
+
+      Der zweite Grund ist, dass der Kalman-Filter Vorhersagen viel schneller als eine typische Videobildrate liefert.
+
+      Da die Bildwechselfrequenz der Kamera 30fps beträgt, das Zeitintervall zwischen benachbarten Bildern [Gl.], beträgt die tatsächliche Geschwindigkeit des zu prüfenden Objekts etwa 10mm/s.
+
+      In einem so kurzen Zeitraum kann man also davon ausgehen, dass sich das Objekt in einer gleichmäßigen linearen Bewegung befindet
+
+      
+
+      Wir gehen davon aus, dass durch die Verwendung eines einfachen kinematischen Modells, das die Beschleunigung an verschiedenen Punkten des Körpers nicht berücksichtigt, der Fehler bei der Zustandsschätzung zwischen zwei Messupdates ausreichend begrenzt werden kann.
+
+3. 新的 kalman 滤波器：
+
+   1. FilterPy
+   2.  https://filterpy.readthedocs.io/en/latest/kalman/KalmanFilter.html
+   3. https://github.com/rlabbe/filterpy
+   4. 
+
+4. 换方向：
+
+   1. The EKF does this with the Jacobian. 
+   2. particle filter
 
 
 
 
+## 谈论过后做了什么：
+
+1. FilterPy 编程
+
+   1. 
+
+2. 理解Sebastian 写的代码
+
+3. 看怎么用 Particle Filter
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Thesis:
+
+Meines Erachtens wird die Erkennung durch den Kalmanfilter genauer. Aber da wir die Daten nicht zurückbringen, was ist der Zweck des Kalmanfilters? Wir schauen einfach hinaus und sagen die Entwicklung voraus.
+
+1. Ob ich meinen Titel von Thesis ändern soll?  ” Vergleich und Analyse kamerabasierter Bewegungserkennung und -bewertung“ 
+2. Zu groß. “ kalman für die Bewegungsvorhersage auf Mediapipe.” Oder “Kalman-Filter zur Bewegungsverfolgung auf AI Framework(Meidapipe)”
+3. vorhersagen ist fast 30 Seitig Paper. Erster Entwurf 
+4. Gibt es Beispiel für Schriftsatz. 
