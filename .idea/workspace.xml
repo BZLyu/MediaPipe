@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="efffefa6-f167-48b5-8692-5e27cd9e663a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Code/FilterPy/Video_kalman/Compare_Data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/FilterPy/Video_kalman/View.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/FilterPy/Video_kalman/kalman_angle.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/FilterPy/Video_kalman/kalman_points.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/FilterPy/Video_kalman/main_video.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/FilterPy/Video_kalman/set_kalman.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/Mediapipe/Landmarks_check.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Code/cv2_Kalman/1_Kalman/Points_dx/Compare_Data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BA_Ablauf.md" beforeDir="false" afterPath="$PROJECT_DIR$/BA_Ablauf.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/FilterPy/Origin/kalman_points.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/FilterPy/Origin/kalman_points.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/FilterPy/Origin/main_Points_hand.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/FilterPy/Origin/main_Points_hand.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/FilterPy/Origin/set_kalman.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/FilterPy/Origin/set_kalman.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/cv2_Kalman/1_Kalman/Maus_Tracing/Maus_x_y.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/cv2_Kalman/1_Kalman/Maus_Tracing/Maus_x_y.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/cv2_Kalman/1_Kalman/Points_dx/main_Points_dx.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/cv2_Kalman/1_Kalman/Points_dx/main_Points_dx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/cv2_Kalman/2_Kalman/Hand_Angle/set_kalman.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/cv2_Kalman/2_Kalman/Hand_Angle/set_kalman.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +45,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Code/Mediapipe" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -209,6 +193,7 @@
       <workItem from="1644989844707" duration="14792000" />
       <workItem from="1645028066149" duration="13359000" />
       <workItem from="1645097138661" duration="6227000" />
+      <workItem from="1645196711387" duration="1278000" />
     </task>
     <servers />
   </component>
