@@ -6,8 +6,6 @@ import math
 import kalman_points
 import set_kalman
 
-import kalman_angle
-
 import View
 
 
@@ -26,18 +24,13 @@ def video():
 
     cap = cv2.VideoCapture(0)
     # todo: set kalman filter
-    kalman_elbow_angle = set_kalman.set_kalman_elbow_angle()
 
     all_kalman = set_kalman.set_kalman_all()
-
-    up_kalman = set_kalman.set_kalman_hand_angle()
-    down_kalman = set_kalman.set_kalman_hand_angle()
 
     # Curl counter variables
     counter = 0
     new_counter = 0
     stage = None
-    new_stage = None
 
     # Set View
     front = False
@@ -83,7 +76,7 @@ def video():
 
             # Calculate angle
             angle = calculate_angle(shoulder, elbow, wrist)
-            new_angle = kalman_angle.get_elbow_angle(kalman_elbow_angle, angle)
+
 
             # Curl counter logic
             if angle > 160:
@@ -91,12 +84,6 @@ def video():
             if angle < 45 and stage == 'down':
                 stage = "up"
                 counter += 1
-
-            if new_angle > 160:
-                new_stage = "down"
-            if new_angle < 45 and new_stage == 'down':
-                new_stage = "up"
-                new_counter += 1
 
             # Visualize angle
 # TODO: show arm status
@@ -111,25 +98,24 @@ def video():
 # TODO: show counter.
 
             cv2.putText(image, str(counter), (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, str(new_counter), (100, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 100, 0), 2, cv2.LINE_AA)
 
 
 # TODO: show all new points.
 
             prediction = kalman_points.all_points(all_kalman, landmarks)
             # todo: change points of hand.
-            hand_prediction, last_wrist, accesspoints_up, accesspoints_down, change_up, change_down = \
-                kalman_angle.hand_angle_2kalman(up_kalman, down_kalman, landmarks, last_wrist, accesspoints_up,
-                                                accesspoints_down, change_up, change_down)
+            # hand_prediction, last_wrist, accesspoints_up, accesspoints_down, change_up, change_down = \
+            #     kalman_angle.hand_angle_2kalman(up_kalman, down_kalman, landmarks, last_wrist, accesspoints_up,
+            #                                     accesspoints_down, change_up, change_down)
 
-            # 15 left_wrist-current
-            prediction[15] = hand_prediction[0]
-            # 17 left_pinky-current
-            prediction[17] = hand_prediction[1]
-            # 19 left_index-current
-            prediction[19] = hand_prediction[2]
-            # 21 left_thumb-current
-            prediction[21] = hand_prediction[3]
+            # # 15 left_wrist-current
+            # prediction[15] = hand_prediction[0]
+            # # 17 left_pinky-current
+            # prediction[17] = hand_prediction[1]
+            # # 19 left_index-current
+            # prediction[19] = hand_prediction[2]
+            # # 21 left_thumb-current
+            # prediction[21] = hand_prediction[3]
 
             # show
             for i in range(len(prediction)):

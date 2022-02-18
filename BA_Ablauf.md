@@ -702,17 +702,215 @@ Frage stellen：
 
 1. FilterPy 编程
 
-   1. 
+   1. 结果非常的好，没有延迟现象了
+   2. 放入视频
 
 2. 理解Sebastian 写的代码
 
-3. 看怎么用 Particle Filter
+   1. 视频需要放缓几秒（点会乱），点记录是从 9000 多开始的
+
+3. 看怎么用 Particle Filter（是否需要了呢？因为其实效果已经很好了）
+
+   1. filterpy.monte_carlo
+
+      Routines for Markov Chain Monte Carlo (MCMC) computation, mainly for particle filtering.
 
    
 
+# 第十五周 07.02 - 11.02
 
 
 
+Die Datei enthält Punkte vom 9012 bis zum 24.344 Frame des Videos, das ist ca. 2s bevor er losläuft bis eine halbe Minute nachdem er stehen geblieben ist. Diese Daten wurden mit einer Rate von 200 Punkten/Sekunde aufgenommen, das Video mit 30 Frames/Sekunde. Eventuell stimmen diese Zahlen nicht ganz genau, wenn du das Gefühl hast, dass du es um ein paar Frames verschieben solltest, dann mach das ruhig.
+
+Der Teil bei 01:30 (Frame 2061) liegt also eh nicht in dem Bereich, zu dem wir Daten haben, das kannst du also ignorieren
+
+## 做了
+
+1. 改变视频分辨率
+   1. time:497.2103515625s
+      fps:29.9973642003412
+      Width:1920.0
+      Height:1080.0
+      Number:14915.0
+   2. 真的点：126000，23，2
+2. 
+
+
+
+# 问题：
+
+1. 如何确定数据里面的点与画面对应起来？
+   1. 21000 开始是差不多的
+   2. 9500 开始是 9500 开始动
+   3. 3000 开始是 9700
+   4. 0 开始是 9800 开始动
+
+2. 真的点有 126000 组，每组 23 个点，每个点 2 个坐标，x,y
+   1. 有些数据是 Nan （比如 points[5]）
+   2. Cricle 函数精度太低 只能是显示整数，所以看起来像是一动不动-可是脚的部分也是一动不动啊。。（只是因为前面数据太多，跳过一些）
+      1. 
+3. CV2 读取视频的帧数是一样的？？（无论源文件帧数是多少）
+   1. Opencv 读取视频有延迟现象 （验证了，不是 opencv 的原因，是 Mediapipe 的原因）
+   1. 我把原视频帧数放慢了播放还是一样的读取速度–很奇怪
+
+
+
+# Nach Treffen
+
+1. 不把真实的点展现出来(可以展示了)
+
+2. 查一下 Mediapipe 怎么读取视频？我记得它官网上有的
+
+   1. 和我的没区别
+
+3. 若Mediapipe 也没办法那么尝试算出 ~~CV2~~ Mediapipe的视频码率
+
+   1. 现在这个不重要了。已经解决，用了随机跳，做个大概准确即可
+
+4. 找更近的点
+
+   1. Daten 里面怎么连线的，每个点对应的号数是什么？
+
+      1. 几个点的平均位置，如果有一个点缺失数据那么点就会不平衡，这种情况怎么办？
+      2. ![Knoten——real 2](/Volumes/Life/OneDrive - stud.tu-darmstadt.de/Darmstadt/Arbeit/MedieapipePose/理论/Knoten——real 2.png)
+      
+      
+
+5. 改进翻转点，有些时候 Mediapipe 会出错，通过人为改变
+
+   1. ~~腰部的 24 的点 x 大于 23 的点则为翻转了~~   腰部是肩膀的(7/12)
+      1. 可是怎么改善呢。发现错误后。kalman 应该怎么做？
+         1. 不带入 kalman，会画面卡住。不能 不带入， 不然就不是 kalman 的检测了
+         2. 带入之前的点进 kaleman，会不停地自己带入（如果几秒内都是 mediapipe 错误的话）
+            1. 先 prediction 还是先 update? 先 prediction
+            2. 更新原点会不动，不更新点，就直接预测会远远偏离轨道
+            3. 画面还是会不动了，噪声设置的太少了，太依赖检测到的数据了。
+            4. 设置更新的概率？
+
+6. Mediapipe 怎么读取 Framezahl 的
+
+   1. 不需要了
+
+7. 测试哪个更好
+
+   1. 很不稳定，感觉 1 半 1 半
+
+​	
+
+
+
+
+
+# 第十六周 14.02 - 18.02
+
+## 待解决：
+
+1. 几个点的平均位置，如果有一个点缺失数据那么点就会不平衡，这种情况怎么办？
+
+2. 改进翻转点，有些时候 Mediapipe 会出错，通过人为改变行不通。是因为 Mediappipe 读取视频文件有问题。重新寻找解决办法！
+
+   1. ~~腰部的 24 的点 x 大于 23 的点则为翻转了   腰部是肩膀的(7/12)，向下兼容 现在的肩膀小于等于等于上一个的腰 ，现在的腰小于等于上一个的腿，错误~~
+
+   2. ~~为什么已经判断为错的现象还是会走卡尔曼预测出来？2.update 里的~~
+
+      1. ~~可是怎么改善呢。发现错误后。kalman 应该怎么做？~~
+         1. ~~不带入 kalman，会画面卡住。不能 不带入， 不然就不是 kalman 的检测了~~
+         
+         2. ~~带入之前的点进 kaleman，会不停地自己带入（如果几秒内都是 mediapipe 错误的话）~~
+            1. ~~先 prediction 还是先 update? 先 prediction~~
+            2. ~~更新原点会不动，不更新点，就直接预测会远远偏离轨道~~
+            3. ~~画面还是会不动了，噪声设置的太少了，太依赖检测到的数据了。~~
+            4. ~~设置更新的概率？~~
+         
+         3. ~~重新看 Kalman的文档几个 funktion 有意思：~~
+         
+            1. ~~predict_steadystate~~
+         
+               1. ​        ~~*Predict state (prior) using the Kalman filter state propagation*        *equations. Only x is updated, P is left unchanged. See*        *update_steadstate() for a longer explanation of when to use this*        *method.*~~
+         
+            2. ~~update_steadystate~~
+               1. ~~*Add a new measurement (z) to the Kalman filter without recomputing*        *the Kalman gain K, the state covariance P, or the system*        *uncertainty S.*         *You can use this for LTI systems since the Kalman gain and covariance*        *converge to a fixed value. Precompute these and assign them explicitly,*        *or run the Kalman filter using the normal predict()/update(0 cycle*        *until they converge.*         *The main advantage of this call is speed. We do significantly less*        *computation, notably avoiding a costly matrix inversion.*         *Use in conjunction with predict_steadystate(), otherwise P will grow*        *without bound.*~~
+               
+               2. ~~update_correlated~~
+               
+                  1. ~~*Add a new measurement (z) to the Kalman filter assuming that*        *process noise and measurement noise are correlated as defined in*        *the `self.M` matrix.*~~
+               
+               3. ~~Get_prediction()~~
+               
+                  1. ~~*Predicts the next state of the filter and returns it without*        *altering the state of the filter.*~~
+                  2. ~~Return (x,P)~~
+                  3. ~~B 为 None 用不了这个会报错~~
+               
+               4. ~~get_update()~~
+               
+                  1. ~~*Computes the new estimate based on measurement `z` and returns it*        *without altering the state of the filter.*~~
+                  2. ~~用这个位置不会变~~
+         
+   
+   2.1 Mediapipe use PacketResamplerCalculator via 
+   
+3. 测试哪个更好
+
+   1. 很不稳定，感觉 1 半 1 半的成功率，点变化方向的速度太快？
+
+
+
+## 梳理一下我现在的问题：
+
+1. #### 很不稳定，感觉 1 半 1 半的成功率，点变化方向的速度太快？（成功率用概率算一算从头到尾做一遍）
+
+   1. 几个点的平均位置，如果有一个点缺失数据那么点就会不平衡，这种情况怎么办？
+
+2. 
+
+3. #### 改进翻转点，有些时候 Mediapipe 会出错，通过人为改变行不通。是因为 Mediappipe 读取视频文件有问题。重新寻找解决办法！
+
+   1. 跳过出错的帧，画面卡顿严重，正确率还是一半一半：Succese= 0.4651272384542884
+
+   1. 不跳过帧：
+      
+      1. 不做改变：Succese= 0.47841398200078256
+      
+      1. 用 kalman 算下一步怎么走：
+         1. 不更新数据直接，预测点会不停地走下去偏离轨道。
+      
+         2. 用上一个状态（同一个，不更新卡尔曼滤波器）推可能的下一个，但手会动，而画面是卡住的。 all_kalman.get_update()[0] 
+      
+         3. all_kalman.get_prediction()[0]
+      
+         4. all_kalman.get_update(old_point)[0]. 
+      
+         5. 
+      
+         6. |            | 1                   | 2                   | 3                  | 4                  |
+            | :--------- | ------------------- | ------------------- | ------------------ | ------------------ |
+            | Landmark20 | 0.4507308796658836  | 0.48128342245989303 | 0.4431172899941257 | 0.4374143891461744 |
+            | Landmark12 | 0.541541672101213   |                     |                    |                    |
+            | Cut        | 0.48923959827833574 |                     |                    |                    |
+      
+            
+
+
+
+
+
+
+
+## Fragen stellen:
+
+1. Ob du auch Video langsam lief? Bei dir gibt kein Problem wie mir? 
+   1. Ich habe die Video nur via CV2 durchlaufen. Das ist kein Problem. Das heißt, meineseit hat Meidapipe Problem. Denn ich habe auch andere Video durch gleich Code laufen. Dies gibt kein Problem beim punkt lesen. Aber auch 
+2. Große Problem bei Mediapipe:
+   	1. Video Langsam liefern. https://github.com/google/mediapipe/issues/1160
+   	1. Landmark falsch setzen.
+
+Nach Treffen:
+
+1. Studi-Rechner benutzen um Mediapipe richtig laufen.
+2. Geschwendigkeit erhöhrt, Vertauigket abnehmen.
+3. Reset Kalmanfilter, falls Werte sinnlos. Eine Position zubestimme
+4. Beschleuning als State Matirx
 
 
 
@@ -734,3 +932,17 @@ Meines Erachtens wird die Erkennung durch den Kalmanfilter genauer. Aber da wir 
 2. Zu groß. “ kalman für die Bewegungsvorhersage auf Mediapipe.” Oder “Kalman-Filter zur Bewegungsverfolgung auf AI Framework(Meidapipe)”
 3. vorhersagen ist fast 30 Seitig Paper. Erster Entwurf 
 4. Gibt es Beispiel für Schriftsatz. 
+
+## 比例 10 000 Wörtern
+
+1. Abstract: 200
+
+2. Introduction: 500, 5%
+
+3. Research background:  3000-4000, 30-40%
+
+4. Literature Review: 4000 40%
+5. Methodolog: 1000, 10%
+6. Ergebniss:1000-2000,  10-20%
+7. Analysis: 500-2000,   5-20%
+8. Fazit: 500-2000, 5-10%

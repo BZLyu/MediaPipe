@@ -1,55 +1,9 @@
 # Author: Bingzhen Lyu
 # Date: 2022/1/14
 # Kalman
-import cv2
 import numpy as np
 import math
-
-
-def set_kalman_elbow_angle():
-    # Todo:set variable
-    unit_num_state = 4  # x，dx，ddx, dddx
-    num_measurement = 1  # measurement: Elbow_angle
-    num_state = unit_num_state * num_measurement
-    num_dimension = 1  # 1 Angle
-    t = 1  # delta t =1
-    c = 1  # Change of acceleration
-    n_diff = 3  # Number of derivation
-
-    # TODO: set unit D
-    d = np.zeros((unit_num_state, unit_num_state))
-    d[0][1] = 1
-    d[1][2] = 1
-    d[2][3] = 1
-    # d[3][5] = 1
-    # d[4][6] = 1
-    # d[5][7] = 1
-    kalman_elbow_angle = kalmanfilter(num_state, num_measurement, num_dimension, unit_num_state, n_diff, d, t, c)
-
-    return kalman_elbow_angle
-
-
-def set_kalman_hand_angle():
-    # Todo:set variable
-    unit_num_state = 2  # x，dx
-    num_point = 4  # 4 Points of hand
-    num_state = unit_num_state * num_point
-    num_dimension = 1  # 1 Angle
-    t = 1  # delta t =1
-    c = 1  # Change of acceleration
-    n_diff = 1  # Number of derivation
-
-    # TODO: set unit D
-    d = np.zeros((unit_num_state, unit_num_state))
-    d[0][1] = 1
-    # d[1][2] = 1
-    # d[2][3] = 1
-    # d[3][5] = 1
-    # d[4][6] = 1
-    # d[5][7] = 1
-    kalman_hand_points = kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d, t, c)
-
-    return kalman_hand_points
+from filterpy.kalman import KalmanFilter
 
 
 def set_kalman_hand_point():
@@ -82,7 +36,7 @@ def set_kalman_all():
     num_state = unit_num_state * num_point
     num_dimension = 2  # 2 Dimension(x,y)
     t = 1  # delta t =1
-    c = 1  # Change of acceleration
+    c = 100  # Change of acceleration
     n_diff = 1  # Number of derivation
 
     # TODO: set unit D
@@ -98,28 +52,61 @@ def set_kalman_all():
 # ------set KalmanFilter--------
 
 
+"""Kalman Filter
+     Refer to http:/github.com/rlabbe/filterpy
+
+     Parameters
+     ----------
+     dim_x: int
+         dims of state variables, eg:(x,y,vx,vy)->4
+     dim_z: int
+         dims of observation variables, eg:(x,y)->2
+     dim_u: int
+         dims of control variables,eg: a->1
+         p = p + vt + 0.5at^2
+         v = v + at
+         =>[p;v] = [1,t;0,1][p;v] + [0.5t^2;t]a
+     """
+
+
 def kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d, t, c):
     # TODO: Set KalmanFilter
-    kalman = cv2.KalmanFilter(num_state, num_point*num_dimension)  # cv2.KalmanFilter(num_state,observation)
 
-    # TODO: set measurementMatrix H
-    h = get_h(num_point, num_state, unit_num_state, num_dimension)
-    kalman.measurementMatrix = np.array(h, np.float32)
+    kalman = KalmanFilter(num_state, num_dimension*num_point)
 
+
+    # TODO: set Initial state x
+    x = get_x(num_state, unit_num_state, num_dimension)
+    kalman.x = np.array(x)
     # TODO: set transitionMatrix F
     #
     unif = unit_f(d, n_diff, t)
     f = get_f(unif, num_point)
-    kalman.transitionMatrix = np.array(f, np.float32)
-    #
+    kalman.F = np.array(f)
+    # TODO: set measurementMatrix H
+    h = get_h(num_point, num_state, unit_num_state, num_dimension)
+    kalman.H = np.array(h)
+
+    # TODO: set covariance Matrix P
+    p = np.eye(num_state)*(c**2)
+    kalman.P = np.array(p)
+
+    # TODO: set uncertainty R
+    # r = get_r(c, num_point, num_dimension)
+    kalman.R = np.array(np.eye(num_point*num_dimension)*(c**2))
+
     # TODO: Set processNoiseCov Q
     q = get_q(unif, num_point, c)
-    kalman.processNoiseCov = np.array(q, np.float32) * 0.03
+    kalman.Q = np.array(q)
+    # kalman.Q = Q_discrete_white_noise(num_dimension, t, c, num_point*num_dimension)
 
     # print("D:", d)
-    # print("measurementMatrix H:", kalman.measurementMatrix)
-    # print("transitionMatrix F: ", kalman.transitionMatrix)
-    # print("processNoiseCov Q:", kalman.processNoiseCov)
+    # print("Initial state x:\n", kalman.x)
+    # print("transitionMatrix F: \n", kalman.F)
+    # print("measurementMatrix H: \n", kalman.H)
+    # print("covariance Matrix P:\n", kalman.P)
+    # print("uncertainty R:\n", kalman.R)
+    # print("processNoiseCov Q:\n", kalman.Q)
     return kalman
 
 # ------------calculation process-------------#
@@ -166,6 +153,7 @@ def get_r(unif):  # n=number of state
     return uni_r
 
 
+
 def get_q(unif, n_point, c):
     unir = get_r(unif)
     q1 = unir*unir.T
@@ -204,3 +192,12 @@ def get_h(num_point, num_state_total, num_state_each, num_dimension):
             i += num_dimension
     # print("h:\n", h)
     return h
+
+
+def get_x(num_state, unit_num_state, num_dimension):
+    x = np.zeros((num_state, 1))
+
+    for i in range(0, x.shape[0], unit_num_state):
+        for j in range(num_dimension):
+            x[i+j][0] = 1
+    return x

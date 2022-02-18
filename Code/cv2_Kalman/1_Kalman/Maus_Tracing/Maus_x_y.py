@@ -58,8 +58,8 @@ if __name__ == '__main__':
     kalman.processNoiseCov = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32)*0.03
 
     while True:
-        cv2.imshow("kalman_tracker", frame)
-        if (cv2.waitKey(30) & 0xff) == ord('q'):
+        cv2.imshow("kalman_maustracker", frame)
+        if (cv2.waitKey(30) & 0xff) == ord('q'):  # 按 q 键退出
             break
 
     cv2.destroyAllWindows()

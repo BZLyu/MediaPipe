@@ -19,9 +19,10 @@ def all_points(all_kalman, landmarks):
         j += 2
     # print(current_measurement)
     # print("-------------------------------")
+    all_kalman.predict()
+    all_kalman.update(current_measurement)
 
-    all_kalman.correct(np.array(current_measurement, np.float32))
-    prediction = all_kalman.predict()
+    prediction = all_kalman.x
 
     j = 0
 

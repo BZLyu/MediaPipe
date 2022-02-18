@@ -10,6 +10,7 @@ import kalman_angle
 import set_kalman_angle
 
 import View
+import Compare_Data
 
 
 def calculate_angle(a, b, c):
@@ -25,7 +26,8 @@ def calculate_angle(a, b, c):
 
 def video():
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('/Users/stella/Desktop/Meidapipe/Mediapipe.mp4')
+    points = np.load("/Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy")
     kalman_angle_origin = set_kalman_angle.set_kalman_angle()
     point_kalman = set_kalman_Points.set_kalman()
 
@@ -37,6 +39,9 @@ def video():
 
     # Set View
     front = False
+
+    # Set real points
+    frame_pointer = 23776  # Which Picture
 
     # Setup mediapipe instance
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
@@ -110,13 +115,22 @@ def video():
             prediction = kalman_points.all_points(point_kalman, landmarks)
 
             for i in range(len(prediction)):
-                point_new = tuple(np.multiply(prediction[i], [1280, 720]).astype(int))
+                point_new = tuple(np.multiply(prediction[i], [1920, 1080]).astype(int)) #[1280, 720]
                 cv2.circle(image, point_new, 5, (0, 100, 0), -1)
+
+# TODO: show which is better, Mediapipe with or without kalman
+            better_results = Compare_Data.compare(landmarks, prediction, points[frame_pointer])
+            if better_results == 'K':
+                cv2.putText(image, "Kalman better", (100, 200), cv2.FONT_HERSHEY_SIMPLEX,
+                            2, (255, 255, 255), 2, cv2.LINE_AA)
+            else:
+                cv2.putText(image, "Mediapipe better", (100, 200), cv2.FONT_HERSHEY_SIMPLEX,
+                            2, (255, 255, 255), 2, cv2.LINE_AA)
 # todo: connect line
 
             for i in mp_pose.POSE_CONNECTIONS:
-                start_point = tuple(np.multiply(prediction[i[0]], [1280, 720]).astype(int))
-                end_point = tuple(np.multiply(prediction[i[1]], [1280, 720]).astype(int))
+                start_point = tuple(np.multiply(prediction[i[0]], [1920, 1080]).astype(int))
+                end_point = tuple(np.multiply(prediction[i[1]], [1920, 1080]).astype(int))
                 cv2.line(image, start_point, end_point, (0, 100, 0), 2)
 
             mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
