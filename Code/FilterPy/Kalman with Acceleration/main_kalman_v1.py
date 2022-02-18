@@ -24,15 +24,7 @@ def video():
     cap = cv2.VideoCapture('D:cut_1.mp4')
     points = np.load('D:transformed_ground_truth.npy')
     # TODO: set kalman filter
-    first_frame = True
     all_kalman = set_kalman.set_kalman_all()
-
-    # Curl counter variables
-    # counter = 0
-    # stage = None
-
-    # Set View
-    front = False
 
     # Set real points
     frame_pointer = 23776  # Which Picture
@@ -64,16 +56,6 @@ def video():
                 continue
 
             landmarks = results.pose_landmarks.landmark
-
-            # length_shoulder = math.sqrt(((landmarks[12].x-landmarks[11].x)**2) +
-            #                         ((landmarks[12].y-landmarks[11].y)**2))
-            # length_hip = math.sqrt(((landmarks[24].x-landmarks[23].x)**2) +
-            #                    ((landmarks[24].y-landmarks[23].y)**2))
-            # if length_hip < length_shoulder*(1/2) or length_shoulder < length_hip or landmarks[13].x < landmarks[23].x:
-            #     continue
-
-# TODO:  show Mediapipe points
-#             mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
 
 # TODO: show prediction
