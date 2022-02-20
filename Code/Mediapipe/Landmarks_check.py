@@ -52,8 +52,7 @@ def video():
             currTime = time.time()
             fps = 1/(currTime-prevTime)
             prevTime = currTime
-            if fps < 1:
-                continue
+
             cv2.putText(image, f'FPS:{int(fps)}', (20, 78), cv2.FONT_HERSHEY_PLAIN, 3, (0, 0, 255), 2)
 
 

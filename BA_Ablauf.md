@@ -905,44 +905,17 @@ Der Teil bei 01:30 (Frame 2061) liegt also eh nicht in dem Bereich, zu dem wir D
    	1. Video Langsam liefern. https://github.com/google/mediapipe/issues/1160
    	1. Landmark falsch setzen.
 
-Nach Treffen:
+## Nach Treffen:
 
-1. Studi-Rechner benutzen um Mediapipe richtig laufen.
-2. Geschwendigkeit erhöhrt, Vertauigket abnehmen.
-3. Reset Kalmanfilter, falls Werte sinnlos. Eine Position zubestimme
-4. Beschleuning als State Matirx
+1. Studi-Rechner benutzen um Mediapipe richtig laufen. Ok
+2. Geschwendigkeit erhöhrt, Vertauigket abnehmen. ok
+   1. x 得出来的是什么？理论知识，看 Kalman 的
+   2. Frist Nan=  120686, num_nan= 2658
 
-
-
-
-
-
-
+3. Compare 修改 ok
+4. Reset Kalmanfilter, falls Werte sinnlos. Eine Position zubestimme？？ 可以不 reset 了
+5. Beschleuning als State Matirx ok
+6. check 点。 有空的直接这组数据不用。ok
 
 
 
-
-
-
-# Thesis:
-
-Meines Erachtens wird die Erkennung durch den Kalmanfilter genauer. Aber da wir die Daten nicht zurückbringen, was ist der Zweck des Kalmanfilters? Wir schauen einfach hinaus und sagen die Entwicklung voraus.
-
-1. Ob ich meinen Titel von Thesis ändern soll?  ” Vergleich und Analyse kamerabasierter Bewegungserkennung und -bewertung“ 
-2. Zu groß. “ kalman für die Bewegungsvorhersage auf Mediapipe.” Oder “Kalman-Filter zur Bewegungsverfolgung auf AI Framework(Meidapipe)”
-3. vorhersagen ist fast 30 Seitig Paper. Erster Entwurf 
-4. Gibt es Beispiel für Schriftsatz. 
-
-## 比例 10 000 Wörtern
-
-1. Abstract: 200
-
-2. Introduction: 500, 5%
-
-3. Research background:  3000-4000, 30-40%
-
-4. Literature Review: 4000 40%
-5. Methodolog: 1000, 10%
-6. Ergebniss:1000-2000,  10-20%
-7. Analysis: 500-2000,   5-20%
-8. Fazit: 500-2000, 5-10%

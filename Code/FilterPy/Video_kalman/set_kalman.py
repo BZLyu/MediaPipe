@@ -6,47 +6,26 @@ import math
 from filterpy.kalman import KalmanFilter
 
 
-def set_kalman_hand_point():
-    # Todo:set variable
-    unit_num_state = 4  # x，y，dx，dy
-    num_point = 4  # 4 Points of hand
-    num_state = unit_num_state * num_point
-    num_dimension = 2  # 2 Dimension(x,y)
-    t = 1  # delta t =1
-    c = 3  # Change of acceleration
-    n_diff = 1  # Number of derivation
+# Todo:set variable
+unit_num_state = 6  # x，y，dx，dy,ddx,ddy
+num_point = 33  # 33 Points
+num_state = unit_num_state * num_point
+num_dimension = 2  # 2 Dimension(x,y)
+t = 1  # delta t =1
+c = 1  # Change of acceleration
+n_diff = 2  # Number of derivation
 
-    # TODO: set unit D
-    d = np.zeros((unit_num_state, unit_num_state))
-    d[0][2] = 1
-    d[1][3] = 1
-    # d[2][4] = 1
-    # d[3][5] = 1
-    # d[4][6] = 1
-    # d[5][7] = 1
-    kalman_hand_points = kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d, t, c)
-
-    return kalman_hand_points
-
+# TODO: set unit D
+d = np.zeros((unit_num_state, unit_num_state))
+d[0][2] = 1
+d[1][3] = 1
+d[2][4] = 1
+d[3][5] = 1
+# d[4][6] = 1
+# d[5][7] = 1
 
 def set_kalman_all():
-    # Todo:set variable
-    unit_num_state = 6  # x，y，dx，dy,ddx,ddy
-    num_point = 33  # 33 Points
-    num_state = unit_num_state * num_point
-    num_dimension = 2  # 2 Dimension(x,y)
-    t = 1  # delta t =1
-    c = 1  # Change of acceleration
-    n_diff = 2  # Number of derivation
 
-    # TODO: set unit D
-    d = np.zeros((unit_num_state, unit_num_state))
-    d[0][2] = 1
-    d[1][3] = 1
-    # d[2][4] = 1
-    # d[3][5] = 1
-    # d[4][6] = 1
-    # d[5][7] = 1
     return kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d, t, c)
 
 # ------set KalmanFilter--------
@@ -73,7 +52,6 @@ def kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d,
     # TODO: Set KalmanFilter
 
     kalman = KalmanFilter(num_state, num_dimension*num_point)
-
 
     # TODO: set Initial state x
     x = get_x(num_state, unit_num_state, num_dimension)
@@ -110,6 +88,7 @@ def kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d,
     # print("uncertainty R:\n", kalman.R)
     # print("processNoiseCov Q:\n", kalman.Q)
     return kalman
+
 
 # ------------calculation process-------------#
 

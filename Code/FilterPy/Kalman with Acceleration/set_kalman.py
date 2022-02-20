@@ -5,48 +5,27 @@ import numpy as np
 import math
 from filterpy.kalman import KalmanFilter
 
+# Todo:set variable
+unit_num_state = 6  # x，y，dx，dy,ddx,ddy
+num_point = 33  # 33 Points
+num_state = unit_num_state * num_point
+num_dimension = 2  # 2 Dimension(x,y)
+t = 1  # delta t =1
+c = 1000  # Change of acceleration
+n_diff = 2  # Number of derivation
 
-def set_kalman_hand_point():
-    # Todo:set variable
-    unit_num_state = 4  # x，y，dx，dy
-    num_point = 4  # 4 Points of hand
-    num_state = unit_num_state * num_point
-    num_dimension = 2  # 2 Dimension(x,y)
-    t = 1  # delta t =1
-    c = 3  # Change of acceleration
-    n_diff = 1  # Number of derivation
-
-    # TODO: set unit D
-    d = np.zeros((unit_num_state, unit_num_state))
-    d[0][2] = 1
-    d[1][3] = 1
-    # d[2][4] = 1
-    # d[3][5] = 1
-    # d[4][6] = 1
-    # d[5][7] = 1
-    kalman_hand_points = kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d, t, c)
-
-    return kalman_hand_points
+# TODO: set unit D
+d = np.zeros((unit_num_state, unit_num_state))
+d[0][2] = 1
+d[1][3] = 1
+d[2][4] = 1
+d[3][5] = 1
+# d[4][6] = 1
+# d[5][7] = 1
 
 
 def set_kalman_all():
-    # Todo:set variable
-    unit_num_state = 6  # x，y，dx，dy,ddx,ddy
-    num_point = 33  # 33 Points
-    num_state = unit_num_state * num_point
-    num_dimension = 2  # 2 Dimension(x,y)
-    t = 1  # delta t =1
-    c = 1  # Change of acceleration
-    n_diff = 2  # Number of derivation
 
-    # TODO: set unit D
-    d = np.zeros((unit_num_state, unit_num_state))
-    d[0][2] = 1
-    d[1][3] = 1
-    # d[2][4] = 1
-    # d[3][5] = 1
-    # d[4][6] = 1
-    # d[5][7] = 1
     return kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d, t, c)
 
 # ------set KalmanFilter--------
@@ -203,3 +182,14 @@ def get_x(num_state, unit_num_state, num_dimension):
         for j in range(num_dimension):
             x[i+j][0] = 1
     return x
+
+
+def resetq(kalman_all, right):
+
+    unif = unit_f(d, n_diff, t)
+    if right is 1:
+        q = get_q(unif, num_point, c)
+        kalman_all.Q = np.array(q)
+    else:
+        q = get_q(unif, num_point, 0.3)
+        kalman_all.Q = np.array(q)

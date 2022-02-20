@@ -21,20 +21,33 @@ def calculate_angle(a, b, c):
 
 def video():
 
-    cap = cv2.VideoCapture('D:cut_1.mp4')
-    points = np.load('D:transformed_ground_truth.npy')
+    cap = cv2.VideoCapture('/Users/stella/Desktop/Meidapipe/cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
+    points = np.load('/Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy')
+    # D:transformed_ground_truth.npy,
+    # /Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy
     # TODO: set kalman filter
     all_kalman = set_kalman.set_kalman_all()
 
     # Set real points
     frame_pointer = 23776  # Which Picture
     K = 0
+    M = 0
     Tatol= 0
     prevTime = 0
+    first_frame = True
+
 
     # Setup mediapipe instance
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened():
+            if frame_pointer > 126000:
+                break
+            a = np.isnan(points[frame_pointer])
+            if True in a:
+                # print("Fist Nan:", frame_pointer)
+                arr = [6, 7, 7]
+                frame_pointer += arr[int(np.random.randint(0, 3, 1))]
+                continue
 
             ret, frame = cap.read()
             if not ret:
@@ -53,64 +66,43 @@ def video():
 
 
             if results.pose_landmarks is None:
+                arr = [6, 7, 7]
+                frame_pointer += arr[int(np.random.randint(0, 3, 1))]
                 continue
-
+            if first_frame is True:
+                prevlandmarks = results.pose_landmarks.landmark
+                first_frame = False
             landmarks = results.pose_landmarks.landmark
 
-
 # TODO: show prediction
+            # TODO：test Mediapipe goes wrong.
+            prediction, prevlandmarks = kalman_points.all_points(all_kalman, prevlandmarks, landmarks, prevTime)
 
-            # if first_frame is True:
+
+            # for i in range(len(prediction)):
+            #     point_prediction = tuple(np.multiply(prediction[i], [1920, 1080]).astype(int))
+            #     cv2.circle(image, point_prediction, 5, (0, 100, 0), -1)
             #
-            #     prediction_old = prediction = kalman_points.all_points(all_kalman, landmarks)
-            #     first_frame = False
-            #
-            # else:
-            #     # TODO：test Mediapipe goes wrong.
-            #     length_shoulder = math.sqrt(((landmarks[12].x-landmarks[11].x)**2) +
-            #                                 ((landmarks[12].y-landmarks[11].y)**2))
-            #     length_hip = math.sqrt(((landmarks[24].x-landmarks[23].x)**2) +
-            #                            ((landmarks[24].y-landmarks[23].y)**2))
-            #     last_hip = math.sqrt(((prediction_old[24][0]-prediction_old[23][0])**2) +
-            #                          ((prediction_old[24][1]-prediction_old[23][1])**2))
-            #     last_shoulder = math.sqrt(((prediction_old[12][0]-prediction_old[11][0])**2) +
-            #                               ((prediction_old[12][1]-prediction_old[11][1])**2))
-            #     # (7/12)
-            #     if length_hip < length_shoulder*(1/3) or length_shoulder < length_hip or landmarks[13].x < landmarks[23].x:
-            #         # print("26:", landmarks[26].x)
-            #         # print("25:", landmarks[25].x)
-            #         # print("Wrong!")
-            #         prediction = kalman_points.wrong_points(all_kalman, prediction_old)
-            #         prediction_old = prediction
-            #
-            #     else:
-            prediction = kalman_points.all_points(all_kalman, landmarks)
-            prediction_old = prediction
-
-
-            for i in range(len(prediction)):
-                point_prediction = tuple(np.multiply(prediction[i], [1920, 1080]).astype(int))
-                cv2.circle(image, point_prediction, 5, (0, 100, 0), -1)
-
-            for i in mp_pose.POSE_CONNECTIONS:
-                start_point = tuple(np.multiply(prediction[i[0]], [1920, 1080]).astype(int))
-                end_point = tuple(np.multiply(prediction[i[1]], [1920, 1080]).astype(int))
-                cv2.line(image, start_point, end_point, (0, 100, 0), 2)
+            # for i in mp_pose.POSE_CONNECTIONS:
+            #     start_point = tuple(np.multiply(prediction[i[0]], [1920, 1080]).astype(int))
+            #     end_point = tuple(np.multiply(prediction[i[1]], [1920, 1080]).astype(int))
+            #     cv2.line(image, start_point, end_point, (0, 100, 0), 2)
 
 # TODO: show which is better, Mediapipe with or without kalman
-            if frame_pointer > 126000:
-                break
+
             better_results = Compare_Data.compare(landmarks, prediction, points[frame_pointer])
             Tatol += 1
             if better_results == 'K':
-                cv2.putText(image, "Kalman better", (100, 200), cv2.FONT_HERSHEY_SIMPLEX,
-                            2, (255, 255, 255), 2, cv2.LINE_AA)
                 K += 1
             else:
-                cv2.putText(image, "Mediapipe better", (100, 200), cv2.FONT_HERSHEY_SIMPLEX,
+                M +=1
+
+            strkalman = "Kalman better :" + str(K)
+            strMedia = "Meidapipe better :" + str(M)
+            cv2.putText(image, strkalman, (50, 200), cv2.FONT_HERSHEY_PLAIN,
                             2, (255, 255, 255), 2, cv2.LINE_AA)
-
-
+            cv2.putText(image, strMedia, (50, 300), cv2.FONT_HERSHEY_PLAIN,
+                        2, (255, 255, 255), 2, cv2.LINE_AA)
 
 # TODO: show real Points.
 
@@ -133,8 +125,12 @@ def video():
             prevTime = currTime
             if fps < 1:
                 continue
-            cv2.putText(image, f'FPS:{int(fps)}', (20, 78), cv2.FONT_HERSHEY_PLAIN, 3, (0, 0, 255), 2)
 
+            cv2.putText(image, f'FPS:{int(fps)}', (50, 50), cv2.FONT_HERSHEY_PLAIN, 3, (0, 0, 255), 2)
+            success = int((K/Tatol)*100)
+            strsuccess = "Accuracy of kalman:" + str(success) + "%"
+            cv2.putText(image, strsuccess, (50, 400), cv2.FONT_HERSHEY_PLAIN,
+                        3, (255, 255, 255), 2)
             cv2.imshow("Mediapipe mit Kalman", image)
 # TODO: exit
             if cv2.waitKey(1) & 0xFF == ord('q'):
