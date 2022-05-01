@@ -919,3 +919,49 @@ Der Teil bei 01:30 (Frame 2061) liegt also eh nicht in dem Bereich, zu dem wir D
 
 
 
+# 第十七周 21.02 - 25.02
+
+# 目前的问题：
+
+1. 手部的运动速度一直很快，可以只考虑腰部肩部的运动速度加快 ok
+   1. 手部错位厉害。。。?
+   
+2. 腰部的点位置 compare 不对，不是点对点，而是两个点的中点 ok 
+
+3. 真实点到后面，有位置漂移和视频对不上：
+   1. 可能是画面跳跃的时候，数据没有正确的对应。
+   
+4. 想要做一个每次都取最好的值的 output. ok
+
+   
+   
+   
+
+# 剩3 周（4.20）
+
+letzte Woche habe ich den Experimentellen Teil wiederholen. Die Richtigkeit der Kalmanfilter ist 75%.
+
+Ich habe ein paar Dinge gefunden, die verbessert werden können.
+
+1. Denn ich setze Kalman auf 6 Zustände ein. Aber ich hatte "delta t" auf 1 gesetzt. jetzt denke ich das nicht richtig. Ich würde gerne die Zeitdifferenz vor und nach der Verwendung der Kalman auf delta t setzen. Wie denkst du dazu? Es ist zu beachten, dass manchmal Frame übersprungen werden, weil die Landmark von Mediapipe leer ist.
+
+2. Durch Geschwindgkeit aller Landmarks beurteilt ich, ob Mediapipe korrekt ist. Ich möchte nur die Körper und Kopf Teil beurteilen. Denn die Hand und Füße beschleunigen oder verlangsamen sich schnell.
+
+3. Ich möchte die Geschwindgkeit einfach von Kalman nehmen. Denn Kalman enthält Geschwindgkeitskomponente. Vorher bechnet ich seperate.
+
+4. Welchen Wert wird ein Beurtelungspunkt erricht? Muss ich sie nacheinander ausprobieren? Oder  gibt es einen besseren Weg?
+
+# 剩 2 周（27.04）
+
+1. https://blog.csdn.net/sinat_20265495/article/details/51006311 每个区域的，误差比：
+   1. Erro rate_ mediapipe
+   2. Erro rate_Kalman
+2. Die Richtigkeit der Kalmanfilter ist 78%.
+
+2. Die Mediapipe hat höcher Genauigkeit, wenn Köper die Richtung sich wechseln. Kalman ist genauer, wenn er sich in dieselbe Richtung bewegt.
+3. Kritikel Punkt für Beurteilung habe ich noch probieren. Weil die werte Q von Kalmanfiler muss auch optieren.
+4. Punkt von Datei haben großen Abweichung. Schauen mal die Viedio.
+   1. Ich habe folgende Frame überspringen oder nach nächte Frame aufladen.:
+      1. Wenn real Dateil ist leer.
+      2. wenn Landmarks von Mediapipe leer
+5. 4.5.11 Uhr

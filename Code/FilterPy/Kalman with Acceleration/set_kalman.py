@@ -10,7 +10,7 @@ unit_num_state = 6  # x，y，dx，dy,ddx,ddy
 num_point = 33  # 33 Points
 num_state = unit_num_state * num_point
 num_dimension = 2  # 2 Dimension(x,y)
-t = 1  # delta t =1
+t = 1/30  # delta t =1/30
 c = 1000  # Change of acceleration
 n_diff = 2  # Number of derivation
 
@@ -22,7 +22,6 @@ d[2][4] = 1
 d[3][5] = 1
 # d[4][6] = 1
 # d[5][7] = 1
-
 
 def set_kalman_all():
 
@@ -191,5 +190,5 @@ def resetq(kalman_all, right):
         q = get_q(unif, num_point, c)
         kalman_all.Q = np.array(q)
     else:
-        q = get_q(unif, num_point, 0.3)
+        q = get_q(unif, num_point, 0.03)
         kalman_all.Q = np.array(q)

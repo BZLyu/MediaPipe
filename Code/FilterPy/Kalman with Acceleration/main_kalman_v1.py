@@ -35,6 +35,7 @@ def video():
     Tatol= 0
     prevTime = 0
     first_frame = True
+    max_succes = 0
 
 
     # Setup mediapipe instance
@@ -75,7 +76,7 @@ def video():
             landmarks = results.pose_landmarks.landmark
 
 # TODO: show prediction
-            # TODO：test Mediapipe goes wrong.
+            # TODO：get prediction point.//(test whether Mediapipe goes wrong.)
             prediction, prevlandmarks = kalman_points.all_points(all_kalman, prevlandmarks, landmarks, prevTime)
 
 
@@ -90,7 +91,8 @@ def video():
 
 # TODO: show which is better, Mediapipe with or without kalman
 
-            better_results = Compare_Data.compare(landmarks, prediction, points[frame_pointer])
+            better_results= Compare_Data.compare(landmarks, prediction, points[frame_pointer])
+
             Tatol += 1
             if better_results == 'K':
                 K += 1
@@ -128,18 +130,30 @@ def video():
 
             cv2.putText(image, f'FPS:{int(fps)}', (50, 50), cv2.FONT_HERSHEY_PLAIN, 3, (0, 0, 255), 2)
             success = int((K/Tatol)*100)
+            if frame_pointer > 24000:
+                if max_succes < success:
+                    max_succes = success
             strsuccess = "Accuracy of kalman:" + str(success) + "%"
             cv2.putText(image, strsuccess, (50, 400), cv2.FONT_HERSHEY_PLAIN,
                         3, (255, 255, 255), 2)
+            strmax_success = "max Accuracy of kalman:" + str(max_succes) + "%"
+            cv2.putText(image, strmax_success, (50, 500), cv2.FONT_HERSHEY_PLAIN,
+                        3, (255, 255, 255), 2)
             cv2.imshow("Mediapipe mit Kalman", image)
+            #str_erro_kalman="merro kalman:"+erro_kalman+"%"
+            #str_erro_mediapipe="merro mediapipe:"+erro_mediapipe+"%"
+
+            #cv2.putText(image, str_erro_kalman, (200, 50), cv2.FONT_HERSHEY_PLAIN,
+                     #   3, (255, 255, 255), 2)
+
 # TODO: exit
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
     cap.release()
     cv2.destroyAllWindows()
-    success = K/Tatol
-    print("Success=", success)
+
+    print("max Success=", max_succes)
 
 
 if __name__ == '__main__':

@@ -31,13 +31,13 @@ def all_points(all_kalman, prevlandmarks, landmarks, prevTime):
         last_measurement[j] = np.float32(prevlandmarks[i].x)
         last_measurement[j+1] = np.float32(prevlandmarks[i].y)
         j += 2
-            # change Q,偏向测量值
+            # change Q
     currTime = time.time()
     t = currTime-prevTime
     for i in range(current_measurement.shape[0]):
         v = abs(current_measurement[i]-last_measurement[i])/t
 
-        if v > 0.0075:
+        if v > 0.0073:# 0.0075-78%
             right = 0
             break
 
