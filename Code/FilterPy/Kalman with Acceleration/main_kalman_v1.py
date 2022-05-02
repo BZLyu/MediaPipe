@@ -169,8 +169,8 @@ def video():
             #str_erro_kalman="merro kalman:"+erro_kalman+"%"
             #str_erro_mediapipe="merro mediapipe:"+erro_mediapipe+"%"
 
-            #cv2.putText(image, str_erro_kalman, (200, 50), cv2.FONT_HERSHEY_PLAIN,
-                     #   3, (255, 255, 255), 2)
+            # cv2.putText(image, str_erro_kalman, (200, 50), cv2.FONT_HERSHEY_PLAIN,
+            #            3, (255, 255, 255), 2)
 
 # TODO: exit
             if cv2.waitKey(1) & 0xFF == ord('q'):
