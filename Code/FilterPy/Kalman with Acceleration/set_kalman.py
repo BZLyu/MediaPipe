@@ -11,7 +11,7 @@ num_point = 33  # 33 Points
 num_state = unit_num_state * num_point
 num_dimension = 2  # 2 Dimension(x,y)
 t = 1/30  # delta t =1/30
-c = 1000  # Change of acceleration
+c = 10000  # Change of acceleration
 n_diff = 2  # Number of derivation
 
 # TODO: set unit D
@@ -186,7 +186,7 @@ def get_x(num_state, unit_num_state, num_dimension):
 def resetq(kalman_all, right):
 
     unif = unit_f(d, n_diff, t)
-    if right is 1:
+    if right == 1:
         q = get_q(unif, num_point, c)
         kalman_all.Q = np.array(q)
     else:

@@ -31,16 +31,20 @@ def all_points(all_kalman, prevlandmarks, landmarks, prevTime):
         last_measurement[j] = np.float32(prevlandmarks[i].x)
         last_measurement[j+1] = np.float32(prevlandmarks[i].y)
         j += 2
-            # change Q
+    # change Q
     currTime = time.time()
     t = currTime-prevTime
+    b = 0
     for i in range(current_measurement.shape[0]):
         v = abs(current_measurement[i]-last_measurement[i])/t
-
         if v > 0.0073:# 0.0075-78%
             right = 0
+            b = i
             break
-
+    if right == 0:
+        a = all_kalman.x
+        b = b
+        c = b
     set_kalman.resetq(all_kalman, right)
     all_kalman.predict()
     all_kalman.update(current_measurement)

@@ -21,8 +21,8 @@ def calculate_angle(a, b, c):
 
 def video():
 
-    cap = cv2.VideoCapture('/Users/stella/Desktop/Meidapipe/cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
-    points = np.load('/Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy')
+    cap = cv2.VideoCapture('D:cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
+    points = np.load('D:transformed_ground_truth.npy')
     # D:transformed_ground_truth.npy,
     # /Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy
     # TODO: set kalman filter
@@ -37,6 +37,9 @@ def video():
     first_frame = True
     max_succes = 0
 
+    sum_erro_k = 0
+    sum_erro_m = 0
+
 
     # Setup mediapipe instance
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
@@ -46,8 +49,9 @@ def video():
             a = np.isnan(points[frame_pointer])
             if True in a:
                 # print("Fist Nan:", frame_pointer)
-                arr = [6, 7, 7]
-                frame_pointer += arr[int(np.random.randint(0, 3, 1))]
+                # arr = [6, 7, 7]
+                # frame_pointer += arr[int(np.random.randint(0, 3, 1))]
+                frame_pointer += 1
                 continue
 
             ret, frame = cap.read()
@@ -67,8 +71,9 @@ def video():
 
 
             if results.pose_landmarks is None:
-                arr = [6, 7, 7]
-                frame_pointer += arr[int(np.random.randint(0, 3, 1))]
+                # arr = [6, 7, 7]
+                # frame_pointer += arr[int(np.random.randint(0, 3, 1))]
+                frame_pointer += 1
                 continue
             if first_frame is True:
                 prevlandmarks = results.pose_landmarks.landmark
@@ -91,7 +96,7 @@ def video():
 
 # TODO: show which is better, Mediapipe with or without kalman
 
-            better_results= Compare_Data.compare(landmarks, prediction, points[frame_pointer])
+            better_results, erro_k, erro_m = Compare_Data.compare(landmarks, prediction, points[frame_pointer])
 
             Tatol += 1
             if better_results == 'K':
@@ -99,12 +104,32 @@ def video():
             else:
                 M +=1
 
-            strkalman = "Kalman better :" + str(K)
-            strMedia = "Meidapipe better :" + str(M)
-            cv2.putText(image, strkalman, (50, 200), cv2.FONT_HERSHEY_PLAIN,
+            # strkalman = "Kalman better :" + str(K)
+            # strMedia = "Meidapipe better :" + str(M)
+            # cv2.putText(image, strkalman, (50, 200), cv2.FONT_HERSHEY_PLAIN,
+            #                 2, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, strMedia, (50, 300), cv2.FONT_HERSHEY_PLAIN,
+            #             2, (255, 255, 255), 2, cv2.LINE_AA)
+
+#             todo: Absolute error
+            erro_k_frame = 0
+            for i in erro_k:
+                sum_erro_k += i
+                erro_k_frame += i
+            str_ab_k = "Absolute Error Kalman: "+ str(int(erro_k_frame/8))
+
+            erro_m_frame = 0
+            for i in erro_m:
+                sum_erro_m += i
+                erro_m_frame += i
+            str_ab_m = "Absolute Error Mediapip: "+ str(int(erro_m_frame/8))
+
+            cv2.putText(image, str_ab_k, (50, 200), cv2.FONT_HERSHEY_PLAIN,
                             2, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, strMedia, (50, 300), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, str_ab_m, (50, 250), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
+
+
 
 # TODO: show real Points.
 
@@ -119,6 +144,7 @@ def video():
             # chooses with 2/3 probability a 7, with 1/3 a 6 -> on average 6.67 steps forward
             arr = [6, 7, 7]
             frame_pointer += arr[int(np.random.randint(0, 3, 1))]
+
             if frame_pointer < 0:
                 break
 
@@ -152,8 +178,8 @@ def video():
 
     cap.release()
     cv2.destroyAllWindows()
-
-    print("max Success=", max_succes)
+    print ("avary of Kalman_Success :", success, "%")
+    # print("max Success=", max_succes)
 
 
 if __name__ == '__main__':
