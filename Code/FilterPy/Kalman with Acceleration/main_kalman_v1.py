@@ -113,21 +113,58 @@ def video():
 
 #             todo: Absolute error
             erro_k_frame = 0
-            for i in erro_k:
-                sum_erro_k += i
-                erro_k_frame += i
-            str_ab_k = "Absolute Error Kalman every Point: " + str(int(erro_k_frame/8))
-
             erro_m_frame = 0
-            for i in erro_m:
-                sum_erro_m += i
-                erro_m_frame += i
-            str_ab_m = "Absolute Error Mediapip every Point: " + str(int(erro_m_frame/8))
+            erro_body_k = 0
+            erro_body_m = 0
+            erro_leg_k = 0
+            erro_leg_m = 0
+            erro_foot_k = 0
+            erro_foot_m = 0
+            for i in range(len(erro_k)):
+                # sum_erro_k += i
+                if i >= 0 and i <= 3:
+                    erro_body_k += erro_k[i]
+                    erro_body_m += erro_m[i]
+                if i >= 4 and i <= 5:
+                    erro_leg_k += erro_k[i]
+                    erro_leg_m += erro_m[i]
+                if i >= 6:
+                    erro_foot_k += erro_k[i]
+                    erro_foot_m += erro_m[i]
+
+                erro_k_frame += erro_k[i]
+                erro_m_frame += erro_m[i]
+
+            str_ab_k = "Absolute Error Kalman every Point: " + str(int(erro_k_frame))
+            str_ab_m = "Absolute Error Mediapip every Point: " + str(int(erro_m_frame))
+            str_erro_body_k = "Erro of body Kalman: " + str(round(erro_body_k/erro_k_frame, 3)*100)+"%"
+            str_erro_body_m = "Erro of body Mediapipe: " + str(round(erro_body_m/erro_m_frame, 3)*100)+"%"
+
+            str_erro_leg_k = "Erro of leg Kalman: " + str(round(erro_leg_k/erro_k_frame, 3)*100)+"%"
+            str_erro_leg_m = "Erro of leg Mediapipe: " + str(round(erro_leg_m/erro_m_frame, 3)*100)+"%"
+
+            str_erro_foot_k = "Erro of foot Kalman: " + str(round(erro_foot_k/erro_k_frame, 3)*100)+"%"
+            str_erro_foot_m = "Erro of foot Mediapipe: " + str(round(erro_foot_m/erro_m_frame, 3) *100)+"%"
 
             cv2.putText(image, str_ab_k, (50, 200), cv2.FONT_HERSHEY_PLAIN,
                             2, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, str_ab_m, (50, 250), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, str_ab_m, (50, 225), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
+
+            cv2.putText(image, str_erro_body_k, (50, 275), cv2.FONT_HERSHEY_PLAIN,
+                        2, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(image, str_erro_body_m, (50, 300), cv2.FONT_HERSHEY_PLAIN,
+                    2, (255, 255, 255), 2, cv2.LINE_AA)
+
+            cv2.putText(image, str_erro_leg_k, (50, 350), cv2.FONT_HERSHEY_PLAIN,
+                        2, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(image, str_erro_leg_m, (50, 375), cv2.FONT_HERSHEY_PLAIN,
+                        2, (255, 255, 255), 2, cv2.LINE_AA)
+
+            cv2.putText(image, str_erro_foot_k, (50, 425), cv2.FONT_HERSHEY_PLAIN,
+                        2, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(image, str_erro_foot_m, (50, 450), cv2.FONT_HERSHEY_PLAIN,
+                    2, (255, 255, 255), 2, cv2.LINE_AA)
 
 
 
@@ -160,10 +197,10 @@ def video():
                 if max_succes < success:
                     max_succes = success
             strsuccess = "Accuracy of kalman:" + str(success) + "%"
-            cv2.putText(image, strsuccess, (50, 400), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, strsuccess, (50, 700), cv2.FONT_HERSHEY_PLAIN,
                         3, (255, 255, 255), 2)
             strmax_success = "max Accuracy of kalman:" + str(max_succes) + "%"
-            cv2.putText(image, strmax_success, (50, 500), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, strmax_success, (50, 750), cv2.FONT_HERSHEY_PLAIN,
                         3, (255, 255, 255), 2)
             mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
             cv2.imshow("Mediapipe mit Kalman", image)
