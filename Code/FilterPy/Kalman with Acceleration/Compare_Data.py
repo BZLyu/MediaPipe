@@ -54,7 +54,7 @@ def initial(landmarks, prediction, real_points):
         kalman_list[i] = tuple(np.multiply((kalman_list[i]), [1920, 1080]))
 
 
-    real_list = [real_points[9], real_points[6], real_points[10], real_points[4], (real_points[2]+real_points[22])/2,
+    real_list = [real_points[9], real_points[6], (real_points[11]+real_points[0])/2, (real_points[17]+real_points[1])/2, (real_points[2]+real_points[22])/2,
                  (real_points[14]+real_points[13])/2, (real_points[16]+real_points[8])/2,
                  (real_points[15]+real_points[18])/2]
 

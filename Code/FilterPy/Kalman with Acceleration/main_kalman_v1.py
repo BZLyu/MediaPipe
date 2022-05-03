@@ -21,9 +21,9 @@ def calculate_angle(a, b, c):
 
 def video():
 
-    cap = cv2.VideoCapture('D:cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
-    points = np.load('D:transformed_ground_truth.npy')
-    # D:transformed_ground_truth.npy,
+    cap = cv2.VideoCapture('/Users/stella/Desktop/Meidapipe/cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
+    points = np.load('/Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy')
+    # D:transformed_ground_truth.npy
     # /Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy
     # TODO: set kalman filter
     all_kalman = set_kalman.set_kalman_all()
@@ -102,7 +102,7 @@ def video():
             if better_results == 'K':
                 K += 1
             else:
-                M +=1
+                M += 1
 
             # strkalman = "Kalman better :" + str(K)
             # strMedia = "Meidapipe better :" + str(M)
@@ -116,13 +116,13 @@ def video():
             for i in erro_k:
                 sum_erro_k += i
                 erro_k_frame += i
-            str_ab_k = "Absolute Error Kalman: "+ str(int(erro_k_frame/8))
+            str_ab_k = "Absolute Error Kalman every Point: " + str(int(erro_k_frame/8))
 
             erro_m_frame = 0
             for i in erro_m:
                 sum_erro_m += i
                 erro_m_frame += i
-            str_ab_m = "Absolute Error Mediapip: "+ str(int(erro_m_frame/8))
+            str_ab_m = "Absolute Error Mediapip every Point: " + str(int(erro_m_frame/8))
 
             cv2.putText(image, str_ab_k, (50, 200), cv2.FONT_HERSHEY_PLAIN,
                             2, (255, 255, 255), 2, cv2.LINE_AA)
@@ -165,7 +165,9 @@ def video():
             strmax_success = "max Accuracy of kalman:" + str(max_succes) + "%"
             cv2.putText(image, strmax_success, (50, 500), cv2.FONT_HERSHEY_PLAIN,
                         3, (255, 255, 255), 2)
+            mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
             cv2.imshow("Mediapipe mit Kalman", image)
+
             #str_erro_kalman="merro kalman:"+erro_kalman+"%"
             #str_erro_mediapipe="merro mediapipe:"+erro_mediapipe+"%"
 

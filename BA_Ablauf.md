@@ -937,7 +937,7 @@ Der Teil bei 01:30 (Frame 2061) liegt also eh nicht in dem Bereich, zu dem wir D
    
    
 
-# 剩3 周（4.20）
+# 4.18-23.04
 
 letzte Woche habe ich den Experimentellen Teil wiederholen. Die Richtigkeit der Kalmanfilter ist 75%.
 
@@ -951,7 +951,7 @@ Ich habe ein paar Dinge gefunden, die verbessert werden können.
 
 4. Welchen Wert wird ein Beurtelungspunkt erricht? Muss ich sie nacheinander ausprobieren? Oder  gibt es einen besseren Weg?
 
-# 剩 2 周（27.04）
+# 25.04-01.05
 
 1. https://blog.csdn.net/sinat_20265495/article/details/51006311 每个区域的，误差比：
    1. Erro rate_ mediapipe
@@ -965,3 +965,36 @@ Ich habe ein paar Dinge gefunden, die verbessert werden können.
       1. Wenn real Dateil ist leer.
       2. wenn Landmarks von Mediapipe leer
 5. 4.5.11 Uhr
+
+谈论后：
+
+1. 关于跳帧，如果遇到跳过，可以直接读取前一个和后一个的中间值
+2. 错误率，分成几个部分。（absolute Fehler）
+   1. 这一帧的误差/总的误差, 误差率
+3. 调整，Q 和 v 的值。
+
+检查 最高正确率：为什么不能达到 100%？ 因为 kalman 会有一个延迟，因为需要根据前一个值修正现在的值。
+
+
+
+#  02.05-06.05
+
+要做：
+
+1. 分区表示各个部分占得错误比例
+2. 直接从卡尔曼中提取速度的数据
+3. 只考虑身体部分加速度突然变化
+
+对应
+
+| Mediapipe      | real      |
+| -------------- | --------- |
+| 12 (body)      | 9         |
+| 11(body)       | 6         |
+| 24(body)       | (11+0)/2  |
+| 23(body)       | (1+17)/2  |
+| 26(leg_right)  | (2+22)/2  |
+| 25(leg_left)   | (14+13)/2 |
+| 28(foot_right) | (16+8)/2  |
+| 27(foot_left)  | (15+18)/2 |
+
