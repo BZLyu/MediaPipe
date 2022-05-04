@@ -21,8 +21,8 @@ def calculate_angle(a, b, c):
 
 def video():
 
-    cap = cv2.VideoCapture('/Users/stella/Desktop/Meidapipe/cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
-    points = np.load('/Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy')
+    cap = cv2.VideoCapture('D:cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
+    points = np.load('D:transformed_ground_truth.npy')
     # D:transformed_ground_truth.npy
     # /Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy
     # TODO: set kalman filter
@@ -179,7 +179,7 @@ def video():
                 cv2.circle(image, point_real, 5, (0, 255, 0), -1)
 
             # chooses with 2/3 probability a 7, with 1/3 a 6 -> on average 6.67 steps forward
-            arr = [6, 7, 7]
+            arr = [6, 6, 7]
             frame_pointer += arr[int(np.random.randint(0, 3, 1))]
 
             if frame_pointer < 0:
@@ -196,7 +196,7 @@ def video():
             if frame_pointer > 24000:
                 if max_succes < success:
                     max_succes = success
-            strsuccess = "Accuracy of kalman:" + str(success) + "%"
+            strsuccess = "Average accuracy of kalman:" + str(success) + "%"
             cv2.putText(image, strsuccess, (50, 700), cv2.FONT_HERSHEY_PLAIN,
                         3, (255, 255, 255), 2)
             strmax_success = "max Accuracy of kalman:" + str(max_succes) + "%"
@@ -217,8 +217,8 @@ def video():
 
     cap.release()
     cv2.destroyAllWindows()
-    print ("avary of Kalman_Success :", success, "%")
-    # print("max Success=", max_succes)
+    print("average of Kalman_Success :", success, "%")
+    print("max Success=", max_succes, "%")
 
 
 if __name__ == '__main__':
