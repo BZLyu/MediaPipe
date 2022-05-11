@@ -193,7 +193,7 @@ def video():
                 cv2.circle(image, point_real, 5, (0, 255, 0), -1)
 
             # chooses with 2/3 probability a 7, with 1/3 a 6 -> on average 6.67 steps forward
-            arr = [6, 6, 7]
+            arr = [6, 7, 7]
             frame_pointer += arr[int(np.random.randint(0, 3, 1))]
 
             if frame_pointer < 0:
