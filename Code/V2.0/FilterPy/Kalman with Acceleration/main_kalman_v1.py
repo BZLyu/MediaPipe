@@ -21,8 +21,8 @@ def calculate_angle(a, b, c):
 
 def video():
 
-    cap = cv2.VideoCapture('D:cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
-    points = np.load('D:transformed_ground_truth.npy')
+    cap = cv2.VideoCapture('/Users/stella/Desktop/Meidapipe/cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
+    points = np.load('/Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy')
     # D:transformed_ground_truth.npy
     # /Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy
     # TODO: set kalman filter
@@ -32,17 +32,19 @@ def video():
     frame_pointer = 23776  # Which Picture
     K = 0
     M = 0
-    Tatol= 0
+    Total= 0
     prevTime = 0
     first_frame = True
     max_succes = 0
 
     sum_erro_k = 0
     sum_erro_m = 0
+    
 
 
     # Setup mediapipe instance
-    with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
+    with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5,
+                      static_image_mode=True) as pose:
         while cap.isOpened():
             if frame_pointer > 126000:
                 break
@@ -98,7 +100,7 @@ def video():
 
             better_results, erro_k, erro_m = Compare_Data.compare(landmarks, prediction, points[frame_pointer])
 
-            Tatol += 1
+            Total += 1
             if better_results == 'K':
                 K += 1
             else:
@@ -114,57 +116,69 @@ def video():
 #             todo: Absolute error
             erro_k_frame = 0
             erro_m_frame = 0
-            erro_body_k = 0
-            erro_body_m = 0
-            erro_leg_k = 0
-            erro_leg_m = 0
-            erro_foot_k = 0
-            erro_foot_m = 0
+            # erro_body_k = 0
+            # erro_body_m = 0
+            # erro_leg_k = 0
+            # erro_leg_m = 0
+            # erro_foot_k = 0
+            # erro_foot_m = 0
             for i in range(len(erro_k)):
                 # sum_erro_k += i
-                if i >= 0 and i <= 3:
-                    erro_body_k += erro_k[i]
-                    erro_body_m += erro_m[i]
-                if i >= 4 and i <= 5:
-                    erro_leg_k += erro_k[i]
-                    erro_leg_m += erro_m[i]
-                if i >= 6:
-                    erro_foot_k += erro_k[i]
-                    erro_foot_m += erro_m[i]
+                # if i >= 0 and i <= 3:
+                #     erro_body_k += erro_k[i]
+                #     erro_body_m += erro_m[i]
+                # if i >= 4 and i <= 5:
+                #     erro_leg_k += erro_k[i]
+                #     erro_leg_m += erro_m[i]
+                # if i >= 6:
+                #     erro_foot_k += erro_k[i]
+                #     erro_foot_m += erro_m[i]
 
                 erro_k_frame += erro_k[i]
                 erro_m_frame += erro_m[i]
+            sum_erro_k += erro_k_frame
+            sum_erro_m += erro_m_frame
 
             str_ab_k = "Absolute Error Kalman every Point: " + str(int(erro_k_frame))
             str_ab_m = "Absolute Error Mediapip every Point: " + str(int(erro_m_frame))
-            str_erro_body_k = "Erro of body Kalman: " + str(round(erro_body_k/erro_k_frame, 3)*100)+"%"
-            str_erro_body_m = "Erro of body Mediapipe: " + str(round(erro_body_m/erro_m_frame, 3)*100)+"%"
 
-            str_erro_leg_k = "Erro of leg Kalman: " + str(round(erro_leg_k/erro_k_frame, 3)*100)+"%"
-            str_erro_leg_m = "Erro of leg Mediapipe: " + str(round(erro_leg_m/erro_m_frame, 3)*100)+"%"
+            str_ab_k_average = "Absolute Error Kalman on average" + str(int(sum_erro_k/(Total)))
+            str_ab_m_average = "Absolute Error Mediapip on average" + str(int(sum_erro_m/(Total)))
 
-            str_erro_foot_k = "Erro of foot Kalman: " + str(round(erro_foot_k/erro_k_frame, 3)*100)+"%"
-            str_erro_foot_m = "Erro of foot Mediapipe: " + str(round(erro_foot_m/erro_m_frame, 3) *100)+"%"
+
+            # str_erro_body_k = "Erro of body Kalman: " + str(round(erro_body_k/erro_k_frame, 3)*100)+"%"
+            # str_erro_body_m = "Erro of body Mediapipe: " + str(round(erro_body_m/erro_m_frame, 3)*100)+"%"
+            #
+            # str_erro_leg_k = "Erro of leg Kalman: " + str(round(erro_leg_k/erro_k_frame, 3)*100)+"%"
+            # str_erro_leg_m = "Erro of leg Mediapipe: " + str(round(erro_leg_m/erro_m_frame, 3)*100)+"%"
+            #
+            # str_erro_foot_k = "Erro of foot Kalman: " + str(round(erro_foot_k/erro_k_frame, 3)*100)+"%"
+            # str_erro_foot_m = "Erro of foot Mediapipe: " + str(round(erro_foot_m/erro_m_frame, 3) *100)+"%"
 
             cv2.putText(image, str_ab_k, (50, 200), cv2.FONT_HERSHEY_PLAIN,
                             2, (255, 255, 255), 2, cv2.LINE_AA)
             cv2.putText(image, str_ab_m, (50, 225), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
 
-            cv2.putText(image, str_erro_body_k, (50, 275), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, str_ab_k_average, (50, 275), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, str_erro_body_m, (50, 300), cv2.FONT_HERSHEY_PLAIN,
-                    2, (255, 255, 255), 2, cv2.LINE_AA)
-
-            cv2.putText(image, str_erro_leg_k, (50, 350), cv2.FONT_HERSHEY_PLAIN,
-                        2, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, str_erro_leg_m, (50, 375), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, str_ab_m_average, (50, 300), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
 
-            cv2.putText(image, str_erro_foot_k, (50, 425), cv2.FONT_HERSHEY_PLAIN,
-                        2, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, str_erro_foot_m, (50, 450), cv2.FONT_HERSHEY_PLAIN,
-                    2, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str_erro_body_k, (50, 275), cv2.FONT_HERSHEY_PLAIN,
+            #             2, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str_erro_body_m, (50, 300), cv2.FONT_HERSHEY_PLAIN,
+            #         2, (255, 255, 255), 2, cv2.LINE_AA)
+            #
+            # cv2.putText(image, str_erro_leg_k, (50, 350), cv2.FONT_HERSHEY_PLAIN,
+            #             2, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str_erro_leg_m, (50, 375), cv2.FONT_HERSHEY_PLAIN,
+            #             2, (255, 255, 255), 2, cv2.LINE_AA)
+            #
+            # cv2.putText(image, str_erro_foot_k, (50, 425), cv2.FONT_HERSHEY_PLAIN,
+            #             2, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str_erro_foot_m, (50, 450), cv2.FONT_HERSHEY_PLAIN,
+            #         2, (255, 255, 255), 2, cv2.LINE_AA)
 
 
 
@@ -192,11 +206,11 @@ def video():
                 continue
 
             cv2.putText(image, f'FPS:{int(fps)}', (50, 50), cv2.FONT_HERSHEY_PLAIN, 3, (0, 0, 255), 2)
-            success = int((K/Tatol)*100)
+            success = int((K / Total) * 100)
             if frame_pointer > 24000:
                 if max_succes < success:
                     max_succes = success
-            strsuccess = "Average accuracy of kalman:" + str(success) + "%"
+            strsuccess = "Average accuracy of kalman :" + str(success) + "%"
             cv2.putText(image, strsuccess, (50, 700), cv2.FONT_HERSHEY_PLAIN,
                         3, (255, 255, 255), 2)
             strmax_success = "max Accuracy of kalman:" + str(max_succes) + "%"

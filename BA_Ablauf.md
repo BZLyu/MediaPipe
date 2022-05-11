@@ -998,3 +998,42 @@ Ich habe ein paar Dinge gefunden, die verbessert werden können.
 | 28(foot_right) | (16+8)/2  |
 | 27(foot_left)  | (15+18)/2 |
 
+4. 加入时间，在 Kalman 准确率低于 Mediapipe 的时间是哪些？（？？）
+
+
+
+
+
+经过观察：每次 Mediapipe 出错都是因为手在身体的后方，Mediapipe检测不到手部，导致数据出错。
+
+
+
+曾经是检测 8 个点，有四个点好于 Mediapipe 就是好的。
+
+现在是所有加起来的误差小于 Mediapipe 就是好的，准确率只有 68%
+
+
+
+Frage:
+
+1. Köper 40%, Bein 30%, Fuß 30%
+   1. Der Punkt des Körpers selbst unterscheidet sich sehr von dem tatsächlichen Punkt
+2. Zeit: Kann sie durch Frame ausgedrückt werden? Wenn Absult Fehler von Kalman größer als Mediapipe, Mediapipe ist besser.
+   1. Vermute : Änderung der Richtung.
+3. Beurteilung der Richtigkeit.Vorher war ich beurteile 8 Punkt , falls 4 oder mehr Punkte besser ,dann ist es besser. Jetzt beurteile ich nur gesamt Absulute Fehler. 68%
+4. Gründe für Fehler von Mediapipe ist.: Der Körper bedeckt die Hand.Hand Hinter der Körper. Das ist warum Kalman kann dies besser.(Paper gesehen, Klaman Filter.)
+5. Expose. Inhalt für meine AB.
+
+
+
+接下来要做的事：
+
+1. 修正实际点在展示在图像上.// https://github.com/google/mediapipe/issues/631
+   1. 使用PacketResamplerCalculator
+   2. 自定义： https://www.cnblogs.com/Iflyinsky/p/14697882.html
+   3. 
+2. Mitte Werte für Absulute Fehler（Zeit abhänig）
+3. 对于肩部的修正
+
+
+
