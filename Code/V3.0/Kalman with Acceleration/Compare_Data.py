@@ -25,13 +25,13 @@ def compare(landmarks, prediction, real_points):
             checklist[i] = 1
 
 
-    count = checklist.count(1)
-    if count >= 4:
-        better_result = 'K'
-    else:
-        better_result = 'M'
+    # count = checklist.count(1)
+    # if count >= 4:
+    #     better_result = 'K'
+    # else:
+    #     better_result = 'M'
 
-    return better_result, erro_k, erro_m
+    return erro_k, erro_m
 
 
 def initial(landmarks, prediction, real_points):
