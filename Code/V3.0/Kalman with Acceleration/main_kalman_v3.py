@@ -21,13 +21,13 @@ def calculate_angle(a, b, c):
 
 def video():
 
-    cap = cv2.VideoCapture('D:cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
+    cap = cv2.VideoCapture('/Users/stella/Desktop/Meidapipe/cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
     # cap.set(CV_CAP_PROP_BUFFERSIZE,33)
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
-    out = cv2.VideoWriter('D:cut_2.avi', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (frame_width, frame_height))
-
-    points = np.load('D:transformed_ground_truth.npy')
+    out = cv2.VideoWriter('/Users/stella/Desktop/Meidapipe/cut_2.avi', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (frame_width, frame_height))
+# /Users/stella/Desktop/Meidapipe/cut_2.avi
+    points = np.load('/Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy')
     # D:transformed_ground_truth.npy
     # /Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy
     # TODO: set kalman filter
@@ -55,7 +55,7 @@ def video():
         while cap.isOpened():
             if frame_pointer > 126000:
                 break
-            a = np.isnan(points[frame_pointer])
+            # a = np.isnan(points[frame_pointer])
             # if True in a:
             #     frame_pointer += 1
             #     continue

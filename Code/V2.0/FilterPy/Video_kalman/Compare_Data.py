@@ -18,7 +18,8 @@ def compare(landmarks, prediction, real_points):
     #     better_result = 'M'
 
     #
-    checklist = [0, 0, 0, 0]
+    error_m = []
+    error_k = []
     mediapipe_list, kalman_list, real_list = initial(landmarks, prediction, real_points)
     for i in range(len(checklist)):
 
@@ -30,17 +31,18 @@ def compare(landmarks, prediction, real_points):
 
             diff_k = math.sqrt(math.pow((kalman_list[i][0] - real_points[i][0]), 2) +
                                math.pow((kalman_list[i][1] - real_points[i][1]), 2))
+        error_k.append()
 
-            if diff_k < diff_m:
-                checklist[i] = 1
+    #         if diff_k < diff_m:
+    #             checklist[i] = 1
+    #
+    # count = checklist.count(1)
+    # if count >= 2:
+    #     better_result = 'K'
+    # else:
+    #     better_result = 'M'
 
-    count = checklist.count(1)
-    if count >= 2:
-        better_result = 'K'
-    else:
-        better_result = 'M'
-
-    return better_result
+    return better_result,
 
 
 def initial(landmarks, prediction, real_points):

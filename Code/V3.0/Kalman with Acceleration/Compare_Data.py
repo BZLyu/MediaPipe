@@ -6,24 +6,18 @@ import math
 
 def compare(landmarks, prediction, real_points):
 
-    #
-    checklist = [0, 0, 0, 0, 0, 0, 0, 0]
     mediapipe_list, kalman_list, real_list = initial(landmarks, prediction, real_points)
     erro_k = [0, 0, 0, 0, 0, 0, 0, 0]
     erro_m = [0, 0, 0, 0, 0, 0, 0, 0]
     for i in range(len(checklist)):
 
-        diff_m = math.sqrt(math.pow((mediapipe_list[i][0] - real_points[i][0]), 2) +
-                           math.pow((mediapipe_list[i][1] - real_points[i][1]), 2))
+        diff_m = math.sqrt(math.pow((mediapipe_list[i][0] - real_list[i][0]), 2) +
+                           math.pow((mediapipe_list[i][1] - real_list[i][1]), 2))
         erro_m[i] = diff_m
 
-        diff_k = math.sqrt(math.pow((kalman_list[i][0] - real_points[i][0]), 2) +
-                           math.pow((kalman_list[i][1] - real_points[i][1]), 2))
+        diff_k = math.sqrt(math.pow((kalman_list[i][0] - real_list[i][0]), 2) +
+                           math.pow((kalman_list[i][1] - real_list[i][1]), 2))
         erro_k[i] = diff_k
-
-        if diff_k < diff_m:
-            checklist[i] = 1
-
 
     return erro_k, erro_m
 
