@@ -23,6 +23,10 @@ def video():
 
     cap = cv2.VideoCapture('D:cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
     # cap.set(CV_CAP_PROP_BUFFERSIZE,33)
+    frame_width = int(cap.get(3))
+    frame_height = int(cap.get(4))
+    out = cv2.VideoWriter('D:cut_2.avi', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (frame_width, frame_height))
+
     points = np.load('D:transformed_ground_truth.npy')
     # D:transformed_ground_truth.npy
     # /Users/stella/Desktop/Meidapipe/2d_transformed_ground_truth.npy
@@ -33,7 +37,10 @@ def video():
     frame_pointer = 23776  # Which Picture
     Total= 0
     kalman_each_better =0
-    kalman_average_better =0
+    kalman_mediane_better =0
+    list_k_error = []
+    list_m_error = []
+
 
     prevTime = 0
     first_frame = True
@@ -49,13 +56,14 @@ def video():
             if frame_pointer > 126000:
                 break
             a = np.isnan(points[frame_pointer])
-            if True in a:
-                frame_pointer += 1
-                continue
+            # if True in a:
+            #     frame_pointer += 1
+            #     continue
 
             ret, frame = cap.read()
             if not ret:
-                print("Can't receive frame (stream end?). Exiting ...")
+                # print("Can't receive frame (stream end?). Exiting ...")
+                print(str_k_median)
                 break
             # Recolor image to RGB
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -70,9 +78,9 @@ def video():
 
 
             if results.pose_landmarks is None:
-                # arr = [6, 7, 7]
-                # frame_pointer += arr[int(np.random.randint(0, 3, 1))]
-                frame_pointer += 1
+                arr = [6, 7, 7]
+                frame_pointer += arr[int(np.random.randint(0, 3, 1))]
+                # frame_pointer += 1
                 continue
             if first_frame is True:
                 prevlandmarks = results.pose_landmarks.landmark
@@ -115,12 +123,16 @@ def video():
                 kalman_each_better += 1
             str_k_each = "Better Absolute Error Kalman each Frame: " + str(int(kalman_each_better/Total*100))+"%"
 
-            str_ab_k_average = "Absolute Error Kalman on average" + str(int(sum_erro_k/(Total)))
-            str_ab_m_average = "Absolute Error Mediapip on average" + str(int(sum_erro_m/(Total)))
+            list_k_error.append(erro_k_frame)
+            list_m_error.append(erro_m_frame)
+            median_k = list_k_error[int(len(list_k_error)/2)]
+            median_m = list_m_error[int(len(list_m_error)/2)]
+            str_ab_k_median = "Absolute Error Kalman in Median" + str(int(median_k))
+            str_ab_m_median = "Absolute Error Mediapip in Median" + str(int(median_m))
 
-            if (sum_erro_k/(Total)) < (sum_erro_m/(Total)):
-                kalman_average_better += 1
-            str_k_average = "Better Absolute Error Kalman on average: " + str(int(kalman_average_better/Total*100))+"%"
+            if (median_k) < (median_m):
+                kalman_mediane_better += 1
+            str_k_median = "Better Absolute Error Kalman in Median: " + str(int(kalman_mediane_better/Total*100))+"%"
 
             cv2.putText(image, str_ab_k, (50, 200), cv2.FONT_HERSHEY_PLAIN,
                             2, (255, 255, 255), 2, cv2.LINE_AA)
@@ -129,11 +141,15 @@ def video():
             cv2.putText(image, str_k_each, (50, 250), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
 
-            cv2.putText(image, str_ab_k_average, (50, 300), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, str_ab_k_median, (50, 300), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, str_ab_m_average, (50, 325), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, str_ab_m_median, (50, 325), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, str_k_average, (50, 350), cv2.FONT_HERSHEY_PLAIN,
+            cv2.putText(image, str_k_median, (50, 350), cv2.FONT_HERSHEY_PLAIN,
+                        2, (255, 255, 255), 2, cv2.LINE_AA)
+
+
+            cv2.putText(image, "Pointer:"+str(frame_pointer), (50, 500), cv2.FONT_HERSHEY_PLAIN,
                         2, (255, 255, 255), 2, cv2.LINE_AA)
 
 
@@ -158,7 +174,7 @@ def video():
             fps = 1/(currTime-prevTime)
             prevTime = currTime
             if fps < 1:
-                frame_pointer += 1
+                # print(str_k_median)
                 continue
 
             # fps = cap.get(cv2.CAP_PROP_FPS)
@@ -176,11 +192,14 @@ def video():
 
 # TODO: exit
 
+            out.write(image)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
     cap.release()
+    out.release()
     cv2.destroyAllWindows()
+    print(str_k_median)
 
 if __name__ == '__main__':
     mp_drawing = mp.solutions.drawing_utils
