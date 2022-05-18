@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="efffefa6-f167-48b5-8692-5e27cd9e663a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/Compare_Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/Compare_Data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/kalman_points.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/kalman_points.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/main_kalman_v3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/main_kalman_v3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/set_kalman.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/set_kalman.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,7 +253,7 @@
       <workItem from="1651589925352" duration="2092000" />
       <workItem from="1651592986371" duration="5731000" />
       <workItem from="1652217867281" duration="4757000" />
-      <workItem from="1652263588748" duration="18416000" />
+      <workItem from="1652263588748" duration="29984000" />
     </task>
     <servers />
   </component>
@@ -304,6 +304,11 @@
           <line>1018</line>
           <option name="timeStamp" value="83" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration/main_kalman_v3.py</url>
+          <line>131</line>
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -323,7 +328,7 @@
     <SUITE FILE_PATH="coverage/MediaPipe$test.coverage" NAME="test Coverage Results" MODIFIED="1652267404138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code" />
     <SUITE FILE_PATH="coverage/MediaPipe$Counter.coverage" NAME="Counter Coverage Results" MODIFIED="1642856066317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Counter" />
     <SUITE FILE_PATH="coverage/MediaPipe$main_2_Point.coverage" NAME="main_2_Point Coverage Results" MODIFIED="1642797036621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/2_Points" />
-    <SUITE FILE_PATH="coverage/MediaPipe$main_kalman_v3.coverage" NAME="main_kalman_v3 Coverage Results" MODIFIED="1652857913077" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration" />
+    <SUITE FILE_PATH="coverage/MediaPipe$main_kalman_v3.coverage" NAME="main_kalman_v3 Coverage Results" MODIFIED="1652887866515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/V3.0/Kalman with Acceleration" />
     <SUITE FILE_PATH="coverage/MediaPipe$Landmarks_check.coverage" NAME="Landmarks_check Coverage Results" MODIFIED="1652221745746" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Mediapipe" />
     <SUITE FILE_PATH="coverage/MediaPipe$main_video.coverage" NAME="main_video Coverage Results" MODIFIED="1652264703060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/V2.0/FilterPy/Video_kalman" />
     <SUITE FILE_PATH="coverage/MediaPipe$main_Points.coverage" NAME="main_Points Coverage Results" MODIFIED="1642797052773" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Code/Points" />

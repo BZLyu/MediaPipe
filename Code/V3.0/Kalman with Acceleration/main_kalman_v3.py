@@ -76,12 +76,12 @@ def video():
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-
-            if results.pose_landmarks is None:
-                arr = [6, 7, 7]
-                frame_pointer += arr[int(np.random.randint(0, 3, 1))]
-                # frame_pointer += 1
+            currTime = time.time()
+            fps = 1 / (currTime - prevTime)
+            prevTime = currTime
+            if fps < 1:
                 continue
+
             if first_frame is True:
                 prevlandmarks = results.pose_landmarks.landmark
                 first_frame = False
@@ -125,6 +125,8 @@ def video():
 
             list_k_error.append(erro_k_frame)
             list_m_error.append(erro_m_frame)
+            list_m_error.sort()
+            list_k_error.sort()
             median_k = list_k_error[int(len(list_k_error)/2)]
             median_m = list_m_error[int(len(list_m_error)/2)]
             str_ab_k_median = "Absolute Error Kalman in Median" + str(int(median_k))
@@ -164,18 +166,14 @@ def video():
                 cv2.circle(image, point_real, 5, (0, 255, 0), -1)
 
             # chooses with 2/3 probability a 7, with 1/3 a 6 -> on average 6.67 steps forward
-            arr = [6, 7, 7]
+            arr = [7, 6, 7]
             frame_pointer += arr[int(np.random.randint(0, 3, 1))]
+
 
             if frame_pointer < 0:
                 break
 
-            currTime = time.time()
-            fps = 1/(currTime-prevTime)
-            prevTime = currTime
-            if fps < 1:
-                # print(str_k_median)
-                continue
+
 
             # fps = cap.get(cv2.CAP_PROP_FPS)
 
