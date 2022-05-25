@@ -6,10 +6,10 @@ import time
 import set_kalman
 
 
-def all_points(all_kalman, prevlandmarks, landmarks, prevTime):
+def all_points(all_kalman, prevlandmarks, landmarks):
     # todo: set variable
-    unit_num_state = 6  # x，y，dx，dy,ddx,ddy
-    num_point = 33  # 33 Points
+    unit_num_state = 4  # x，y，dx，dy
+    num_point = 8  # 8 test Points
     # num_state = unit_num_state * num_point
     num_dimension = 2  # 2 Dimension(x,y)
 
@@ -21,31 +21,30 @@ def all_points(all_kalman, prevlandmarks, landmarks, prevTime):
     # todo : Determine if Mediapipe is right
     right = 1
     j = 0
-    for i in range(num_point):
+    point_index = [11, 12, 23, 24, 25, 26, 27, 28]  # 8testpoint
+    for i in point_index:
         current_measurement[j] = np.float32(landmarks[i].x)
         current_measurement[j+1] = np.float32(landmarks[i].y)
         j += 2
 
     j = 0
-    for i in range(num_point):
+    for i in point_index:
         last_measurement[j] = np.float32(prevlandmarks[i].x)
         last_measurement[j+1] = np.float32(prevlandmarks[i].y)
         j += 2
     # change Q
-    currTime = time.time()
-    t = currTime-prevTime
 
-    for i in range(current_measurement.shape[0]):
-        if i == 11 or i == 12 or i == 23 or i == 24 or i == 25 or i == 26:
-            a = all_kalman.x[4+i*6][0]
-            b = all_kalman.x[5+i*6][0]
+    for i in range(len(point_index)):
 
-            if abs(a) > 0.03 or abs(b) > 0.1:  #
-                right = 0
-                # print(abs(a))
-                # print(abs(b))
-                # print(i)
-                break
+        a = all_kalman.x[2+i*4][0]
+        b = all_kalman.x[3+i*4][0]
+
+        if abs(a) > 0.03 or abs(b) > 0.1:  #
+            right = 0
+            # print(abs(a))
+            # print(abs(b))
+            # print(i)
+            break
     # if right ==0:
         # print("!")
     set_kalman.resetq(all_kalman, right)
@@ -63,3 +62,16 @@ def all_points(all_kalman, prevlandmarks, landmarks, prevTime):
     # print("-------------------------------")
     prevlandmarks = landmarks
     return current_prediction, prevlandmarks
+
+def frist_x(all_kalman, landmarks):
+    unit_num_state = 4  # x，y，dx，dy
+    num_point = 8  # 8 test Points
+    # num_state = unit_num_state * num_point
+    num_dimension = 2  # 2 Dimension(x,y)
+
+    j = 0
+    point_index = [11, 12, 23, 24, 25, 26, 27, 28]  # 8testpoint
+    for i in point_index:
+        all_kalman.x[j] = np.float32(landmarks[i].x)
+        all_kalman.x[j + 1] = np.float32(landmarks[i].y)
+        j += 2
