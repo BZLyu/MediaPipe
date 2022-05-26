@@ -62,8 +62,18 @@ def all_points(all_kalman, prevlandmarks, landmarks):
     prevlandmarks = landmarks
     return current_prediction, prevlandmarks
 
+
 def frist_x(all_kalman, landmarks):
 
+    j = 0
+    point_index = [26]  # 8 testpoint
+    for i in point_index:
+        all_kalman.x[j] = np.float32(landmarks[i].x)
+        all_kalman.x[j + 1] = np.float32(landmarks[i].y)
+        j += 2
+
+
+def reset(all_kalman, landmarks):
     j = 0
     point_index = [26]  # 8 testpoint
     for i in point_index:
