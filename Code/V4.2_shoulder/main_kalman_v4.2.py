@@ -1,8 +1,10 @@
+import math
+
 import cv2
 import mediapipe as mp
 import numpy as np
-import math
-import time
+from matplotlib import pyplot as plt
+
 import kalman_points
 import set_kalman
 import Compare_Data
@@ -10,6 +12,17 @@ import Compare_Data
 
 
 def video():
+    mp_drawing = mp.solutions.drawing_utils
+    mp_pose = mp.solutions.pose
+    x =[]  # t
+    y0 =[]  # Diff_s
+    y1=[]
+    y2=[]
+
+    x1=[]
+    z0=[]
+    z1=[]
+    z2=[]
 
     cap = cv2.VideoCapture('D:cut_1.mp4')  # D:cut_1.mp4, /Users/stella/Desktop/Meidapipe/cut_1.mp4
     # cap.set(CV_CAP_PROP_BUFFERSIZE,33)
@@ -25,7 +38,7 @@ def video():
     all_kalman = set_kalman.set_kalman_all()
 
     # Set real points
-    frame_pointer = 23776  # Which Picture
+    frame_pointer = 23776  # Start Picture
     first_frame = True
 
 
@@ -50,13 +63,8 @@ def video():
     # Setup mediapipe instance
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5, model_complexity=0) as pose:
         while cap.isOpened():
-            if frame_pointer >= 126000:
+            if frame_pointer >= 126000:#126000
                 break
-            # a = np.isnan(points[frame_pointer])
-            # if True in a:
-            #     frame_pointer += 1
-            #     continue
-
             ret, frame = cap.read()
             if not ret:
                 # print("Can't receive frame (stream end?). Exiting ...")
@@ -71,12 +79,6 @@ def video():
             # Recolor image to BGR
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-            #
-            # currTime = time.time()
-            # fps = 1 / (currTime - prevTime)
-            # prevTime = currTime
-            # if fps < 1:
-            #     continue
 
             if first_frame is True:
                 prevlandmarks = results.pose_landmarks.landmark
@@ -193,21 +195,78 @@ def video():
                 cv2.circle(image, point_real, 5, (0, 255, 0), -1)
 
             # chooses with 2/3 probability a 7, with 1/3 a 6 -> on average 6.67 steps forward
+            '''--------plot'''
+            if frame_pointer >=23776 and frame_pointer <=24776:
+
+                mediapipe_list, kalman_list, real_list = Compare_Data.initial(landmarks, prediction, points[frame_pointer])
+                # print(leg)
+                if frame_pointer == 23776:
+                    init = real_list[0]
+
+
+                real_diff1 = math.sqrt(math.pow((real_list[0][0] - init[0]), 2) +
+                                       math.pow((real_list[0][1] - init[1]), 2))
+
+
+
+
+                diff_m =math.sqrt(math.pow((mediapipe_list[0][0] - real_list[0][0]), 2) +
+                                       math.pow((mediapipe_list[0][1] - real_list[0][1]), 2))
+
+                diff_k =math.sqrt(math.pow((kalman_list[0][0] - real_list[0][0]), 2)+
+                                      math.pow((kalman_list[0][1] - real_list[0][1]), 2))
+
+                # diff_m=mediapipe_list[0][0] - real_list[0][0]
+                # diff_k=kalman_list[0][0] - real_list[0][0]
+                # real_diff = init[0] - real_list[0][0]
+                y0.append(real_diff1)
+                y1.append(diff_m)
+                y2.append(diff_k)
+
+                t = (frame_pointer - 23776) / 200
+                x.append(t)
+
+            '''--------plot'''
+            if frame_pointer >= 122000 and frame_pointer <= 123000:
+
+                mediapipe_list, kalman_list, real_list = Compare_Data.initial(landmarks, prediction,
+                                                                              points[frame_pointer])
+                # print(leg)
+                if frame_pointer == 123000:
+                    init = real_list[0]
+
+                real_diff1 = math.sqrt(math.pow((real_list[0][0] - init[0]), 2) +
+                                       math.pow((real_list[0][1] - init[1]), 2))
+
+                diff_m = math.sqrt(math.pow((mediapipe_list[0][0] - real_list[0][0]), 2) +
+                                   math.pow((mediapipe_list[0][1] - real_list[0][1]), 2))
+
+                diff_k = math.sqrt(math.pow((kalman_list[0][0] - real_list[0][0]), 2) +
+                                   math.pow((kalman_list[0][1] - real_list[0][1]), 2))
+
+                # diff_m=mediapipe_list[0][0] - real_list[0][0]
+                # diff_k=kalman_list[0][0] - real_list[0][0]
+                # real_diff = init[0] - real_list[0][0]
+                z0.append(real_diff1)
+                z1.append(diff_m)
+                z2.append(diff_k)
+
+                t = (frame_pointer - 23776) / 200
+                x1.append(t)
+
+            '''--------plot'''
             arr = [7, 6, 7]
             frame_pointer += arr[int(np.random.randint(0, 3, 1))]
-
-
-            if frame_pointer < 0:
-                break
-
-
 
             # fps = cap.get(cv2.CAP_PROP_FPS)
 
             # cv2.putText(image, f'FPS:{int(fps)}', (50, 50), cv2.FONT_HERSHEY_PLAIN, 3, (0, 0, 255), 2)
 
             mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-            cv2.imshow("Mediapipe mit Kalman", image)
+            # cv2.imshow("Mediapipe mit Kalman", image)
+
+
+
 
             #str_erro_kalman="merro kalman:"+erro_kalman+"%"
             #str_erro_mediapipe="merro mediapipe:"+erro_mediapipe+"%"
@@ -232,11 +291,57 @@ def video():
     print(str_k_upper_mean)
     print(str_k_lower_mean)
 
+    fig, diff = plt.subplots()
+
+    diff.plot(x, y0, label='real')
+    diff.plot(x, y1, label='mediapipe')
+    diff.plot(x, y2, label='kalman')
+    diff.set_title('diff_left_shoulder_none_reset')
+    diff.set_xlabel('ts')
+    diff.set_ylabel('diff')
+    diff.legend()
+    plt.savefig('./diff_left_shoulder_none_reset_frist10.jpg')
+    plt.show()
+    plt.close()
+
+    fig, diff1 = plt.subplots()
+    diff1.plot(x, y1, label='mediapipe')
+    diff1.plot(x, y2, label='kalman')
+    diff1.set_title('diff_left_shoulder_none_reset')
+    diff1.set_xlabel('ts')
+    diff1.set_ylabel('diff')
+    diff1.legend()
+    plt.savefig('./diff_left_shoulder_none_reset1_frist10.jpg')
+    plt.show()
+    plt.close()
+
+    fig, diff3 = plt.subplots()
+
+    diff3.plot(x1, z0, label='real')
+    diff3.plot(x1, z1, label='mediapipe')
+    diff3.plot(x1, z2, label='kalman')
+    diff3.set_title('diff_left_shoulder_none_reset')
+    diff3.set_xlabel('ts')
+    diff3.set_ylabel('diff')
+    diff3.legend()
+    plt.savefig('./diff_left_shoulder_none_reset_last10.jpg')
+    plt.show()
+    plt.close()
+
+    fig, diff4 = plt.subplots()
+    diff4.plot(x1, z1, label='mediapipe')
+    diff4.plot(x1, z2, label='kalman')
+    diff4.set_title('diff_left_shoulder_none_reset')
+    diff4.set_xlabel('ts')
+    diff4.set_ylabel('diff')
+    diff4.legend()
+    plt.savefig('./diff_left_shoulder_none_reset1_last10.jpg')
+    plt.show()
+
     # print(str_k_each)
 
 if __name__ == '__main__':
-    mp_drawing = mp.solutions.drawing_utils
-    mp_pose = mp.solutions.pose
+
 
 
     video()
