@@ -7,7 +7,7 @@ from filterpy.kalman import KalmanFilter
 from filterpy.common import Q_discrete_white_noise
 
 # Todo:set variable
-unit_num_state = 6  # x，y，dx，dy
+unit_num_state = 6  # x，y，dx，dy,ddy,ddy
 num_point = 1  # 8 Points of test Point
 num_state = unit_num_state * num_point
 num_dimension = 2  # 2 Dimension(x,y)
@@ -31,20 +31,8 @@ def set_kalman_all():
 # ------set KalmanFilter--------
 
 
-"""Kalman Filter
+""" Kalman Filter
      Refer to http:/github.com/rlabbe/filterpy
-
-     Parameters
-     ----------
-     dim_x: int
-         dims of state variables, eg:(x,y,vx,vy)->4
-     dim_z: int
-         dims of observation variables, eg:(x,y)->2
-     dim_u: int
-         dims of control variables,eg: a->1
-         p = p + vt + 0.5at^2
-         v = v + at
-         =>[p;v] = [1,t;0,1][p;v] + [0.5t^2;t]a
      """
 
 
@@ -52,7 +40,6 @@ def kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d,
     # TODO: Set KalmanFilter
 
     kalman = KalmanFilter(num_state, num_dimension*num_point)
-
 
     # TODO: set Initial state x
     x = get_x(num_state, unit_num_state, num_dimension)
@@ -76,18 +63,18 @@ def kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d,
     # TODO: Set processNoiseCov Q
     # q = get_q(unif, num_point, c)
     # kalman.Q = np.array(q)
-    kalman.Q = Q_discrete_white_noise(num_dimension, t, c, block_size=num_point)
+    # kalman.Q = Q_discrete_white_noise(num_dimension, t, c, block_size=num_point)
 
     kalman.B = 0
-    # kalman.Q = Q_discrete_white_noise(num_dimension, t, c, num_point*num_dimension)
+    kalman.Q = Q_discrete_white_noise(3, t, c, 2)
     #
     # print("D:", d)
-    # print("Initial state x:\n", kalman.x)
-    # print("transitionMatrix F: \n", kalman.F)
-    # print("measurementMatrix H: \n", kalman.H)
-    # print("covariance Matrix P:\n", kalman.P)
-    # print("uncertainty R:\n", kalman.R)
-    # print("processNoiseCov Q:\n", kalman.Q)
+    print("Initial state x:\n", kalman.x)
+    print("transitionMatrix F: \n", kalman.F)
+    print("measurementMatrix H: \n", kalman.H)
+    print("covariance Matrix P:\n", kalman.P)
+    print("uncertainty R:\n", kalman.R)
+    print("processNoiseCov Q:\n", kalman.Q)
     return kalman
 
 # ------------calculation process-------------#
@@ -182,14 +169,3 @@ def get_x(num_state, unit_num_state, num_dimension):
         for j in range(num_dimension):
             x[i+j][0] = 1
     return x
-
-
-def resetq(kalman_all, right):
-
-    unif = unit_f(d, n_diff, t)
-    if right == 1:
-        q = get_q(unif, num_point, c)
-        kalman_all.Q = np.array(q)
-    else:
-        q = get_q(unif, num_point, 0.3)
-        kalman_all.Q = np.array(q)

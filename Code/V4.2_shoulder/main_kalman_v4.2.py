@@ -315,28 +315,8 @@ def video():
     plt.show()
     plt.close()
 
-    fig, diff3 = plt.subplots()
 
-    diff3.plot(x1, z0, label='real')
-    diff3.plot(x1, z1, label='mediapipe')
-    diff3.plot(x1, z2, label='kalman')
-    diff3.set_title('diff_left_shoulder_none_reset')
-    diff3.set_xlabel('ts')
-    diff3.set_ylabel('diff')
-    diff3.legend()
-    plt.savefig('./diff_left_shoulder_none_reset_last10.jpg')
-    plt.show()
-    plt.close()
 
-    fig, diff4 = plt.subplots()
-    diff4.plot(x1, z1, label='mediapipe')
-    diff4.plot(x1, z2, label='kalman')
-    diff4.set_title('diff_left_shoulder_none_reset')
-    diff4.set_xlabel('ts')
-    diff4.set_ylabel('diff')
-    diff4.legend()
-    plt.savefig('./diff_left_shoulder_none_reset1_last10.jpg')
-    plt.show()
 
     # print(str_k_each)
 

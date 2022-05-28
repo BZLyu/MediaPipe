@@ -7,7 +7,7 @@ import set_kalman
 
 def all_points(all_kalman, prevlandmarks, landmarks):
     # todo: set variable
-    unit_num_state = 6  # x，y，dx，dy,ddx,ddy
+    unit_num_state = 8  # x，y，dx，dy,ddx,ddy
     num_point = 1  # 8 test Points
     # num_state = unit_num_state * num_point
     num_dimension = 2  # 2 Dimension(x,y)
@@ -33,16 +33,6 @@ def all_points(all_kalman, prevlandmarks, landmarks):
         j += 2
     # change Q
 
-    for i in range(len(point_index)):
-
-        a = all_kalman.x[2+i*4][0]
-        b = all_kalman.x[3+i*4][0]
-
-        if abs(a) > 0.03 or abs(b) > 0.1:  #
-            right = 0
-            break
-
-    set_kalman.resetq(all_kalman, right)
     all_kalman.predict()
     all_kalman.update(current_measurement)
 

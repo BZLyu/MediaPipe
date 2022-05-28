@@ -7,7 +7,7 @@ import set_kalman
 
 def all_points(all_kalman, prevlandmarks, landmarks):
     # todo: set variable
-    unit_num_state = 6  # x，y，dx，dy
+    unit_num_state = 8  # x，y，dx，dy,ddx,ddy
     num_point = 1  # 8 test Points
     # num_state = unit_num_state * num_point
     num_dimension = 2  # 2 Dimension(x,y)
@@ -33,20 +33,6 @@ def all_points(all_kalman, prevlandmarks, landmarks):
         j += 2
     # change Q
 
-    for i in range(len(point_index)):
-
-        a = all_kalman.x[2+i*4][0]
-        b = all_kalman.x[3+i*4][0]
-
-        if abs(a) > 0.03 or abs(b) > 0.1:  #
-            right = 0
-            # print(abs(a))
-            # print(abs(b))
-            # print(i)
-            break
-    # if right ==0:
-        # print("!")
-    set_kalman.resetq(all_kalman, right)
     all_kalman.predict()
     all_kalman.update(current_measurement)
 
@@ -62,8 +48,7 @@ def all_points(all_kalman, prevlandmarks, landmarks):
     prevlandmarks = landmarks
     return current_prediction, prevlandmarks
 
-
-def frist_x(all_kalman, landmarks):
+def reset_x(all_kalman, landmarks):
 
     j = 0
     point_index = [26]  # 8 testpoint
@@ -72,11 +57,3 @@ def frist_x(all_kalman, landmarks):
         all_kalman.x[j + 1] = np.float32(landmarks[i].y)
         j += 2
 
-
-def reset(all_kalman, landmarks):
-    j = 0
-    point_index = [26]  # 8 testpoint
-    for i in point_index:
-        all_kalman.x[j] = np.float32(landmarks[i].x)
-        all_kalman.x[j + 1] = np.float32(landmarks[i].y)
-        j += 2

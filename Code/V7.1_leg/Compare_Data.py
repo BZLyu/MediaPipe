@@ -30,3 +30,4 @@ def initial(landmarks, prediction, real_points):
     real_list = [(real_points[2]+real_points[22])/2]
 
     return mediapipe_list, kalman_list, real_list
+

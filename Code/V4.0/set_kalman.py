@@ -7,22 +7,22 @@ from filterpy.kalman import KalmanFilter
 from filterpy.common import Q_discrete_white_noise
 
 # Todo:set variable
-unit_num_state = 4  # x，y，dx，dy
+unit_num_state = 8  # x，y，dx，dy
 num_point = 8  # 8 Points of test Point
 num_state = unit_num_state * num_point
 num_dimension = 2  # 2 Dimension(x,y)
 t = 1/30  # delta t =1/30
 c = 0.028  # Change of acceleration
-n_diff = 1  # Number of derivation
+n_diff = 4  # Number of derivation
 
 # TODO: set unit D
 d = np.zeros((unit_num_state, unit_num_state))
 d[0][2] = 1
 d[1][3] = 1
-# d[2][4] = 1
-# d[3][5] = 1
-# d[4][6] = 1
-# d[5][7] = 1
+d[2][4] = 1
+d[3][5] = 1
+d[4][6] = 1
+d[5][7] = 1
 
 def set_kalman_all():
 
@@ -76,7 +76,7 @@ def kalmanfilter(num_state, num_point, num_dimension, unit_num_state, n_diff, d,
     # TODO: Set processNoiseCov Q
     # q = get_q(unif, num_point, c)
     # kalman.Q = np.array(q)
-    kalman.Q = Q_discrete_white_noise(num_dimension, t, c, block_size=num_point)
+    kalman.Q = Q_discrete_white_noise(n_diff, t, c, num_dimension, False)
 
     kalman.B = 0
     # kalman.Q = Q_discrete_white_noise(num_dimension, t, c, num_point*num_dimension)

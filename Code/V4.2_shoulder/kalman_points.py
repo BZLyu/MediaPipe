@@ -46,7 +46,7 @@ def all_points(all_kalman, prevlandmarks, landmarks):
             break
     # if right ==0:
         # print("!")
-    set_kalman.resetq(all_kalman, right)
+
     all_kalman.predict()
     all_kalman.update(current_measurement)
 
